@@ -583,3 +583,23 @@ Qualquer IA deverá conseguir entrar no projeto, ler `AI_CONTEXT.md`, consultar 
 
 A IA deverá ser capaz de trocar de modelo, IDE, agente ou ferramenta sem alterar os princípios fundamentais de desenvolvimento definidos neste documento.
 
+
+
+## Coordenação dos agentes e economia de tokens
+
+Toda atividade deste pacote entra pelo [GOD](agents/god/GOD.md), seguindo a
+[spec central](agents/SPEC_CENTRAL.md). Ela define as fontes de verdade, os papéis
+e a sincronização. Cada especialista tem um único Markdown em sua pasta.
+
+O GOD deve repassar explicitamente aos subagentes o protocolo de economia de
+tokens de seu perfil: contexto mínimo suficiente, leitura progressiva, escopo e
+arquivos de responsabilidade, skills por necessidade, retorno curto com links
+para evidências e reutilização de resultados ainda válidos. Evitar histórico
+integral, pesquisa duplicada e delegações sem ganho real. Os especialistas
+solicitam novas especialidades ao GOD; não abrem cadeias de agentes por conta própria.
+
+Preservar a prioridade Correção → Segurança → Simplicidade → Legibilidade →
+Eficiência → Custo → Tokens. Não omitir requisitos, testes necessários ou riscos
+para cumprir um limite de resumo. Não alegar economia medida sem métricas reais.
+Perfis Markdown são instruções portáveis; sua existência não registra agentes
+nem instala skills automaticamente no runtime.
