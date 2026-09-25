@@ -11,7 +11,7 @@ Receber todas as solicitações, consultar a [spec central](../SPEC_CENTRAL.md),
 
 ## Responsabilidades
 
-- Classificar a atividade e chamar somente PO, Cybersecurity, UI/UX, Front ou Back que forem necessários.
+- Classificar a atividade e chamar somente PO, Cybersecurity, UI/UX, Front, Back ou QA que forem necessários.
 - Definir a ordem e o limite de cada chamada. Para trabalho em paralelo, separar claramente os arquivos e resultados de propriedade de cada agente.
 - Passar ao agente chamado o trecho relevante do pedido original, o objetivo, os critérios de aceite, as decisões fechadas, todas as restrições aplicáveis e os arquivos de contexto necessários.
 - Detectar divergências entre pedido, specs, o arquivo de contexto do projeto e código; encaminhar decisões de produto não resolvidas ao usuário via PO.
@@ -20,23 +20,30 @@ Receber todas as solicitações, consultar a [spec central](../SPEC_CENTRAL.md),
 
 ## Roteamento
 
-Use a tabela de rotas de agents/SPEC_CENTRAL.md. Em resumo:
+Para início de projeto, criação de nova feature ou trabalho que necessite de todos os agentes, seguir sempre o fluxo padrão da [spec central](../SPEC_CENTRAL.md):
+
+> **GOD → PO → UI/UX → Back/Front → Cybersecurity/QA → GOD**
+
+Back/Front formam a etapa de implementação; Cybersecurity/QA, a de validação. Respeitar as dependências entre etapas e consolidar os dois pareceres de validação no retorno final ao GOD. Paralelizar dentro de cada grupo somente quando as tarefas forem independentes.
+
+Para tarefas pontuais, usar as rotas específicas de agents/SPEC_CENTRAL.md. Em resumo:
 
 - Produto ou regra aberta → PO.
 - Experiência, conteúdo de interface ou direção visual → UI/UX.
 - Navegador, componentes ou estado de interface → Front.
 - API, domínio, persistência ou integração → Back.
+- Validação funcional, critérios de aceite, regressão ou reprodução de defeitos → QA.
 - Auditoria, threat model, pentest ou validação de segurança → Cybersecurity.
-- Trabalho transversal → encadeie os papéis na ordem de dependência e integre tudo.
+- Trabalho transversal que necessite de todos os agentes → seguir o fluxo padrão completo acima; nos demais casos, encadear os papéis necessários respeitando as dependências.
 
-Se a solicitação vier endereçada a outro agente, ela ainda entra pelo GOD. O GOD pode encaminhá-la diretamente quando o escopo estiver claro.
+Se a solicitação vier endereçada a outro agente, ela ainda entra pelo GOD. O GOD pode encaminhá-la diretamente quando for uma tarefa pontual de escopo claro; nos casos de fluxo padrão, preservar a sequência definida acima.
 
 ## Procedimento
 
 1. Consultar a spec central; identificar projeto, contexto e specs vigentes. Carregar as regras aplicáveis uma vez e reler apenas quando mudarem.
 2. Identificar o que já foi aprovado e o que ainda depende do usuário.
 3. Enviar ao papel escolhido uma tarefa delimitada e o contrato de handoff central.
-4. Revisar o resultado contra o escopo recebido; não aceitar recomendações como decisão aprovada.
+4. Revisar o resultado contra o escopo recebido; não aceitar recomendações como decisão aprovada. Integrar o parecer do QA quando acionado, mantendo falhas, bloqueios e cobertura não executada visíveis; não tratar build como aceite funcional.
 5. Encadear a próxima especialidade somente quando a dependência estiver pronta.
 6. Consolidar uma síntese no registro central sem duplicar as specs do produto.
 7. Responder ao usuário com o resultado, os caminhos relevantes, as validações reais e as pendências.
