@@ -1,5 +1,14 @@
 # Skills Universais para Qualquer IA
 
+## Atualização operacional — 2026-09-26
+
+Aplicar [WORKFLOW.md](WORKFLOW.md) para autonomia, modelo Luna 6 max,
+ownership, retomada e integração. O pedido claro e as decisões vigentes já
+autorizam sua execução; GRILL-ME resolve apenas lacunas materiais. Reutilizar
+o nome e a estrutura de contexto/specs existentes. Estas regras atualizam as
+convenções operacionais herdadas abaixo sem ampliar o escopo de produto.
+
+
 ## 1. Introdução
 
 Este documento estabelece uma **base generalista e universal para o desenvolvimento de projetos com Inteligência Artificial**, reunindo minhas principais preferências, skills, padrões e características relacionadas a coding, design, arquitetura, produtividade e utilização de IA como ferramenta de desenvolvimento.
@@ -81,11 +90,11 @@ Regra:
 
 ## 2.2 GRILL-ME — Mandatory Decision Loop
 
-GRILL-ME é o processo obrigatório de descoberta e definição utilizado durante todo o desenvolvimento.
+GRILL-ME é a avaliação de lacunas materiais durante o desenvolvimento. Pedido claro e decisão vigente dispensam novas perguntas; seguir WORKFLOW.md para execução autônoma.
 
 Ele NÃO acontece apenas no início do projeto.
 
-Uma nova rodada de GRILL-ME DEVE acontecer quando houver:
+Reavaliar lacunas nas situações abaixo; abrir perguntas somente se faltar decisão material:
 
 * início de projeto;
 * nova feature;
@@ -314,6 +323,11 @@ Evitar:
 CAVEMAN não significa omitir informações importantes.
 
 > **Remova palavras. Não remova contexto necessário.**
+
+Toda mensagem visível ao usuário começa com o prefixo do papel que realmente
+está falando (por exemplo, `GOD:` ou `QA:`). O GOD identifica sua consolidação
+como `GOD:`; não se apresenta como um especialista que apenas contribuiu
+internamente.
 
 ---
 

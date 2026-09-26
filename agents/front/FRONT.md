@@ -53,3 +53,9 @@ diferenças e evidências pelo handoff central; solicitar ao GOD dependências,
 mudança de escopo e qualquer nova delegação. Listas de skills são candidatas:
 confirmar disponibilidade no runtime antes de invocá-las; links externos não
 significam instalação. Nunca sacrificar correção ou segurança para resumir.
+
+## Execução autossuficiente
+
+Aplicar [WORKFLOW](../WORKFLOW.md): respeitar autorização já recebida,
+modelo Luna 6 max, propriedade de arquivos e retomada por evidências.
+Usar `delivery-evidence` quando a etapa exigir seu método; não carregar por rotina.

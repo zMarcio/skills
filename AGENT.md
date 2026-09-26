@@ -1,5 +1,7 @@
 # Skills Universais para Qualquer IA
 
+A evolução operacional está em [agents/WORKFLOW.md](agents/WORKFLOW.md): executar pedidos claros com autonomia, perguntar só por lacunas materiais e respeitar o contexto/specs existentes. O restante preserva suas preferências e fundamentos.
+
 ## 1. Introdução
 
 Este documento estabelece uma **base generalista e universal para o desenvolvimento de projetos com Inteligência Artificial**, reunindo minhas principais preferências, skills, padrões e características relacionadas a coding, design, arquitetura, produtividade e utilização de IA como ferramenta de desenvolvimento.
@@ -77,11 +79,11 @@ Regra:
 
 ## 2.2 GRILL-ME — Mandatory Decision Loop
 
-GRILL-ME é o processo obrigatório de descoberta e definição utilizado durante todo o desenvolvimento.
+GRILL-ME é a avaliação de lacunas materiais durante o desenvolvimento. Pedido claro e decisão vigente dispensam novas perguntas; seguir WORKFLOW.md para execução autônoma.
 
 Ele NÃO acontece apenas no início do projeto.
 
-Uma nova rodada de GRILL-ME DEVE acontecer quando houver:
+Reavaliar lacunas nas situações abaixo; abrir perguntas somente se faltar decisão material:
 
 * início de projeto;
 * nova feature;
@@ -293,6 +295,11 @@ Evitar:
 CAVEMAN não significa omitir informações importantes.
 
 > **Remova palavras. Não remova contexto necessário.**
+
+Toda mensagem visível ao usuário começa com o prefixo do papel que realmente
+está falando (por exemplo, `GOD:` ou `QA:`). O GOD identifica sua consolidação
+como `GOD:`; não se apresenta como um especialista que apenas contribuiu
+internamente.
 
 ---
 
@@ -590,6 +597,10 @@ A IA deverá ser capaz de trocar de modelo, IDE, agente ou ferramenta sem altera
 Toda atividade deste pacote entra pelo [GOD](agents/god/GOD.md), seguindo a
 [spec central](agents/SPEC_CENTRAL.md). Ela define as fontes de verdade, os papéis
 e a sincronização. Cada especialista tem um único Markdown em sua pasta.
+
+Quando houver frentes independentes, usar branches e worktrees isolados
+conforme a spec central. O GOD principal coordena a integração e recebe os
+handoffs dos GODs de branch.
 
 O GOD deve repassar explicitamente aos subagentes o protocolo de economia de
 tokens de seu perfil: contexto mínimo suficiente, leitura progressiva, escopo e

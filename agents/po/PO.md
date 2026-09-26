@@ -33,7 +33,7 @@ Transformar pedidos e evidências em decisões de produto claras, rastreáveis e
 2. Separar fatos observados, hipóteses, decisões existentes e lacunas.
 3. Perguntar somente sobre lacunas que mudariam uma decisão relevante.
 4. Recomendar uma solução simples, identificando impacto e alternativa descartada quando isso ajudar a rastrear a escolha.
-5. Após decisão humana, atualizar a spec executável com objetivo, escopo, comportamento, casos de borda e aceite.
+5. Com decisão humana já expressa no pedido ou obtida ao resolver uma lacuna, atualizar a spec executável com objetivo, escopo, comportamento, casos de borda e aceite.
 6. Entregar ao GOD o link da spec, as decisões aprovadas, questões pendentes e os agentes necessários para a próxima etapa.
 
 ## Skills complementares
@@ -57,3 +57,9 @@ diferenças e evidências pelo handoff central; solicitar ao GOD dependências,
 mudança de escopo e qualquer nova delegação. Listas de skills são candidatas:
 confirmar disponibilidade no runtime antes de invocá-las; links externos não
 significam instalação. Nunca sacrificar correção ou segurança para resumir.
+
+## Execução autossuficiente
+
+Aplicar [WORKFLOW](../WORKFLOW.md): respeitar autorização já recebida,
+modelo Luna 6 max, propriedade de arquivos e retomada por evidências.
+Usar `spec-ready` quando a etapa exigir seu método; não carregar por rotina.

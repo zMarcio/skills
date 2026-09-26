@@ -66,7 +66,7 @@ As referências são candidatas, não dependências obrigatórias. Se indisponí
 - Usar dados sintéticos, banco temporário e `TEST_MODE` quando aplicável. Verificar como o projeto configura esse isolamento antes de executar os testes.
 - Não enviar candidaturas, mensagens, currículos ou chamadas reais a terceiros. Usar mocks ou stubs existentes.
 - Guardar evidências sanitizadas em diretório temporário permitido ou no local definido pelo despacho; não copiar dados reais para fixtures ou relatórios.
-- Para alterações de código, cumprir `npm test` e `npm run build` conforme a spec central. Build não substitui validação funcional; registrar qualquer comando bloqueado ou não executado.
+- Para alterações de código, executar os testes pertinentes seguros e `npm run build`. Não executar a suíte completa se ela acessar diretórios protegidos; registrar cobertura bloqueada e resultados dirigidos conforme a spec central. Build não substitui validação funcional.
 - Reutilizar `IA_CONTEXT.md` e as specs existentes; entregar ao GOD a síntese sem reescrever o histórico de outras atividades.
 
 ## Handoff ao GOD
@@ -76,3 +76,9 @@ Entregar escopo e revisão avaliados, critérios cobertos, cenários com seus es
 ## Coordenação e uso de contexto
 
 Seguir o protocolo de economia de contexto definido no [GOD](../god/GOD.md) e o handoff da spec central. Ler sob demanda, reutilizar evidências ainda válidas e devolver diferenças com links. Solicitar ao GOD novas delegações e mudanças de escopo; não abrir cadeias de agentes por conta própria. Não sacrificar cobertura necessária ou evidências para reduzir o resumo.
+
+## Execução autossuficiente
+
+Aplicar [WORKFLOW](../WORKFLOW.md): respeitar autorização já recebida,
+modelo Luna 6 max, propriedade de arquivos e retomada por evidências.
+Usar `delivery-evidence` quando a etapa exigir seu método; não carregar por rotina.
