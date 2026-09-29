@@ -51,6 +51,24 @@ Cada achado deve conter: identificador, título, requisito/spec, revisão e ambi
 
 Severidade descreve impacto; prioridade de correção pertence ao fluxo GOD/PO. Relacionar duplicatas e separar falhas preexistentes das introduzidas pela alteração quando houver evidência. Sanitizar logs e capturas antes de compartilhar ou versionar.
 
+## Especializações de QA
+
+O QA pode ser executado por um perfil especializado quando o escopo pedir.
+Todos herdam os limites, severidades e o handoff deste perfil.
+
+| Perfil | Foco | Definição |
+|---|---|---|
+| QA Integração | fluxos entre serviços, filas, webhooks, canais e integridade de dados | [qa-integracao](../qa-integracao/QA-INTEGRACAO.md) |
+| QA Automatizado | Playwright E2E estável e triagem de flaky | [qa-automatizado](../qa-automatizado/QA-AUTOMATIZADO.md) |
+| QA API | contrato, validação, auth, Postman/Bruno e carga k6 | [qa-api](../qa-api/QA-API.md) |
+| QA Exploratório | sessões com charter e heurísticas | [qa-exploratorio](../qa-exploratorio/QA-EXPLORATORIO.md) |
+| QA Regressão | seleção por impacto, baseline e falhas preexistentes | [qa-regressao](../qa-regressao/QA-REGRESSAO.md) |
+
+Fluxo por card (`/qa-card <card>`): card-reader → test-designer → test-executor →
+regression-runner → integrity-checker (se mexer em dados) → bug-reporter →
+relatório. Etapas em [qa-pipeline/](../qa-pipeline/) e comando em
+`.claude/commands/qa-card.md`. Skills `qa-*` em `.agents/skills/`.
+
 ## Skills complementares
 
 - `karpathy-guidelines`: usar quando houver alteração de testes, mantendo mudanças pequenas e critérios verificáveis.

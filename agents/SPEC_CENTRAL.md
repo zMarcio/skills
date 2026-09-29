@@ -76,11 +76,14 @@ Para tarefas pontuais, continuam válidas as rotas específicas abaixo, usando o
 | Mudança pontual de regra existente | PO → UI/UX, se houver interface → Back e/ou Front → Cybersecurity quando houver superfície relevante → QA valida o aceite e a regressão aplicável → Reviewer revisa a entrega → GOD integra |
 | Tela nova ou mudança de experiência | PO, se faltar decisão → UI/UX → Front → Cybersecurity se houver dados, autenticação, upload ou integração → QA valida o aceite e a regressão aplicável → Reviewer revisa a entrega → GOD integra |
 | API, regra de domínio ou persistência | PO, se a regra estiver aberta → Back → Front se a interface for afetada → Cybersecurity para riscos relevantes → QA valida o aceite e a regressão aplicável → Reviewer revisa a entrega → GOD integra |
+| QA completo a partir de um card | `/qa-card`: card-reader → test-designer → test-executor → regression-runner → integrity-checker se mexer em dados → bug-reporter → GOD consolida relatório |
 | Validação funcional, regressão ou reprodução de bug | QA → GOD encaminha defeitos ao Front/Back, dúvidas de aceite ao PO e riscos de segurança ao Cybersecurity → QA retesta correções |
 | Auditoria ou pentest solicitado | Cybersecurity, após delimitar alvo, ambiente e autorização → GOD consolida achados e encaminha correções |
 | Bug com comportamento esperado já decidido | Front ou Back conforme a camada → Cybersecurity se houver impacto de segurança → QA reproduz/retesta o defeito e a regressão afetada → Reviewer revisa a entrega → GOD confere a spec e o estado |
 | Revisão de código ou preparação para commit solicitada | GOD delimita base/alvo e escopo → Reviewer investiga e apresenta achados e visão da entrega → GOD consolida; commit somente quando explicitamente autorizado |
 | Dúvida, prioridade ou mudança de escopo | PO → decisão do usuário → atualização da spec antes de implementação |
+
+O QA pode ser executado pelos perfis especializados listados em [qa/QA.md](qa/QA.md#especializações-de-qa) (integração, automatizado, API, exploratório, regressão) e pelas etapas de [qa-pipeline/](qa-pipeline/); eles não são papéis novos de decisão, apenas especializações do QA.
 
 QA informa evidências e cobertura pendente; o aceite final do produto pertence ao usuário. Front e Back continuam responsáveis por validar suas próprias alterações.
 
@@ -175,6 +178,7 @@ O GOD acrescenta uma linha ao concluir cada atividade coordenada. Não apaga nem
 | AGENTS-REVIEWER-001 / 2026-09-25 | Reviewer adicionado como revisão sênior após Cybersecurity/QA e antes do GOD: investigação do diff completo, impactos, evidências e apresentação da entrega. Commit continua condicionado a pedido explícito. | Edição documental na sessão principal; nenhuma instância separada chamada | agents/reviewer/REVIEWER.md; agents/SPEC_CENTRAL.md; agents/god/GOD.md | Perfil portável documentado; nenhuma revisão ou teste do código do produto executado nesta atividade. |
 | AGENTS-COORD-001 / 2026-09-26 | Identificação do papel em toda mensagem ao usuário; trabalho independente isolado por branch/worktree com até três GODs de branch, handoff ao GOD principal e integração centralizada. | Edição documental coordenada pelo GOD na sessão principal; nenhuma instância especializada separada chamada | AGENT.md; agents/SHARED_RULES.md; agents/SPEC_CENTRAL.md; agents/god/GOD.md | Protocolo documentado. Nenhuma feature de produto foi alterada; sem push. |
 | WORKFLOW-LUNA-001 / 2026-09-26 | Workflow autossuficiente com três skills locais, Explorer, Spec Writer e Integrator; configuração Codex Luna 6 max, retomada e evidências por conteúdo, ownership de worktrees. | GOD e auditoria independente gpt-6-luna/max | agents/WORKFLOW.md; .agents/skills/; .codex/agents/; specs/workflow/WORKFLOW-LUNA-001.md | Mudança de instruções/configuração; sem alteração de código do produto. |
+| QA-PERFIS-001 / 2026-09-29 | Cinco especializações de QA (integração, automatizado, API, exploratório, regressão), seis etapas do fluxo `/qa-card`, doze skills `qa-*` e registros Codex/Claude Code. | GOD na sessão principal; nenhuma instância separada | agents/qa-*/; agents/qa-pipeline/; .agents/skills/qa-*; .claude/; .codex/agents/; specs/workflow/QA-PERFIS-001.md | Instruções/configuração validadas por script; sem execução de QA em produto. |
 
 ## Guardrails do repositório Find Job
 

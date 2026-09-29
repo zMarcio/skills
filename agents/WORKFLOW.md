@@ -107,6 +107,18 @@ testes nem declarar sucesso para encerrar o ciclo.
 | Preparar spec e unidades executáveis | `spec-ready` | PO / Spec Writer |
 | Isolar e combinar trabalho | `worktree-delivery` | GOD / Integrator |
 | Vincular aceite, revisão e evidência | `delivery-evidence` | QA / Reviewer |
+| Escopo de QA a partir de card | `qa-card-scope` | card-reader |
+| Casos rastreáveis ao aceite | `qa-test-design` | test-designer |
+| API (Postman/Bruno) e carga (k6) | `qa-api-testing`, `qa-k6-load` | QA API |
+| E2E Playwright e instabilidade | `qa-playwright`, `qa-flaky-triage` | QA Automatizado |
+| Sessão exploratória | `qa-exploratory-charter` | QA Exploratório |
+| Fluxos entre serviços e dados | `qa-integration-flows`, `qa-data-integrity` | QA Integração / integrity-checker |
+| Regressão por impacto | `qa-regression-impact` | QA Regressão / regression-runner |
+| Card de bug e relatório | `qa-bug-card`, `qa-relatorio` | bug-reporter / GOD |
+
+No Claude Code, `.claude/agents/` registra os perfis de QA e `.claude/skills`
+aponta para `.agents/skills/`. O comando `/qa-card` fica em `.claude/commands/`;
+no Codex, o GOD segue as mesmas seis etapas daquele arquivo.
 
 As skills locais vivem em `.agents/skills/` e os registros Codex em
 `.codex/agents/`. Os perfis Markdown continuam sendo a fonte de instruções de
