@@ -44,7 +44,7 @@ Riscos não explorados:
 ## Verificar
 
 - Todo achado tem passos reproduzíveis e evidência (print, vídeo, request, console).
-- Bug → `qa-bug-card`. Melhoria ou dúvida de requisito → separar, não é defeito.
+- Bug → `qa-escritor-card`. Melhoria ou dúvida de requisito → separar, não é defeito.
 - Fluxo que vale repetir sempre → sugerir automação ao perfil automatizado.
 
 Com navegador disponível, usar a skill do navegador correspondente e capturar

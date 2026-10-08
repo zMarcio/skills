@@ -1,6 +1,6 @@
 # QA-PERFIS-001 — perfis e skills de QA
 
-Estado: concluído tecnicamente; sem commit/push autorizado.
+Estado: substituído por [QA-CARD-002](QA-CARD-002.md) em 2026-10-08.
 
 ## Pedido e autorização
 

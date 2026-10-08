@@ -60,19 +60,31 @@ for t in sorted((ROOT / ".codex/agents").glob("*.toml")):
         if not (ROOT / ref).exists():
             erros.append(f"{t}: referência inexistente {ref}")
 
-# 4. Agentes Claude Code: frontmatter e perfil referenciado
+# 4. Agentes Claude Code: frontmatter, skills pré-carregadas e sem delegação
+claude_agentes = set()
 for a in sorted((ROOT / ".claude/agents").glob("*.md")):
     fm = frontmatter(a)
     if fm.get("name") != a.stem:
         erros.append(f"{a}: name difere do arquivo")
-    if a.stem not in nomes:
-        erros.append(f"{a}: sem registro Codex correspondente")
+    if not fm.get("description"):
+        erros.append(f"{a}: sem description")
+    claude_agentes.add(a.stem)
+    bloco = re.search(r"^skills:\n((?:\s+- .+\n)+)", a.read_text(encoding="utf-8"), re.M)
+    if not bloco:
+        erros.append(f"{a}: sem skills pré-carregadas")
+    else:
+        for nome in re.findall(r"- (\S+)", bloco.group(1)):
+            if nome not in skills:
+                erros.append(f"{a}: skill pré-carregada não existe: {nome}")
+    if "Agent" not in fm.get("disallowedTools", ""):
+        erros.append(f"{a}: deve bloquear Agent (só o orquestrador delega)")
 
 # 5. Skills citadas com prefixo qa-/locais precisam existir
-locais = ("qa-", "spec-ready", "worktree-delivery", "delivery-evidence")
+locais = ("qa-", "spec-ready", "worktree-delivery", "delivery-evidence",
+          "audit-scope-readonly", "controlled-vulnerability-validation", "security-findings-report")
 for md in list((ROOT / "agents").rglob("*.md")) + list((ROOT / ".claude").rglob("*.md")):
     for nome in re.findall(r"`([a-z][a-z0-9-]+)`", md.read_text(encoding="utf-8")):
-        if nome.startswith(locais) and nome not in skills and nome not in nomes:
+        if nome.startswith(locais) and nome not in skills and nome not in nomes and nome not in claude_agentes:
             erros.append(f"{md}: skill citada não existe: {nome}")
 
 # 6. Links relativos Markdown resolvem
@@ -83,15 +95,50 @@ for md in [p for p in ROOT.rglob("*.md") if ".git" not in p.parts]:
         if not (md.parent / alvo).exists():
             erros.append(f"{md.relative_to(ROOT)}: link quebrado {alvo}")
 
-# 7. Comando /qa-card cita agentes existentes
+# 7. Comando /qa-card cita os seis agentes, e cada um existe
 cmd = ROOT / ".claude/commands/qa-card.md"
+agentes_card = ("leitor", "verificador", "regressao", "questionador", "spec-reviewer", "test-executor",
+                "performance", "cibersecurity", "documentador", "escritor")
 if cmd.exists():
-    for ag in ("card-reader", "test-designer", "test-executor",
-               "regression-runner", "integrity-checker", "bug-reporter"):
-        if ag not in nomes:
-            erros.append(f"qa-card: agente {ag} não registrado")
+    texto = cmd.read_text(encoding="utf-8")
+    for ag in agentes_card:
+        if ag not in claude_agentes:
+            erros.append(f"qa-card: agente {ag} não existe em .claude/agents")
+        if f"**{ag}**" not in texto:
+            erros.append(f"qa-card: agente {ag} não é acionado no comando")
 
-print(f"skills={len(skills)} perfis={len(perfis)} codex={len(nomes)}")
+# 8. Cibersecurity cita as 10 skills escolhidas; as 7 externas não precisam estar no repo
+EXTERNAS = ("audit-context-building", "security-threat-model", "static-analysis", "fp-check",
+            "differential-review", "variant-analysis", "security-best-practices")
+PROPRIAS = ("audit-scope-readonly", "controlled-vulnerability-validation", "security-findings-report")
+ciber = ROOT / ".claude/agents/cibersecurity.md"
+if ciber.exists():
+    texto = ciber.read_text(encoding="utf-8")
+    for s in EXTERNAS + PROPRIAS:
+        if f"`{s}`" not in texto:
+            erros.append(f"cibersecurity: skill {s} não citada")
+    for s in PROPRIAS:
+        if s not in skills:
+            erros.append(f"cibersecurity: skill própria {s} ausente em .agents/skills")
+
+# 9. Skills de terceiros copiadas (têm NOTICE.md) precisam trazer a LICENSE
+for notice in sorted((ROOT / ".agents/skills").glob("*/NOTICE.md")):
+    if not (notice.parent / "LICENSE").exists():
+        erros.append(f"{notice.parent.relative_to(ROOT)}: skill de terceiros sem LICENSE")
+
+# 10. Script de worktree executável e com sintaxe válida
+import os, subprocess
+for sh in (ROOT / ".agents/skills/qa-worktree-frentes/scripts/qa-frentes.sh",
+           ROOT / "scripts/instalar-skills-qa.sh"):
+    if not sh.exists():
+        erros.append(f"{sh.relative_to(ROOT)}: ausente")
+        continue
+    if not os.access(sh, os.X_OK):
+        erros.append(f"{sh.relative_to(ROOT)}: sem permissão de execução")
+    if subprocess.run(["bash", "-n", str(sh)]).returncode != 0:
+        erros.append(f"{sh.relative_to(ROOT)}: erro de sintaxe")
+
+print(f"skills={len(skills)} perfis={len(perfis)} codex={len(nomes)} claude={len(claude_agentes)}")
 if erros:
     print("\n".join(f"ERRO {e}" for e in erros))
     sys.exit(1)

@@ -34,7 +34,7 @@ Para tarefas pontuais, usar as rotas específicas de agents/SPEC_CENTRAL.md. Em 
 - Experiência, conteúdo de interface ou direção visual → UI/UX.
 - Navegador, componentes ou estado de interface → Front.
 - API, domínio, persistência ou integração → Back.
-- Validação funcional, critérios de aceite, regressão ou reprodução de defeitos → QA; escolher a especialização (integração, automatizado, API, exploratório, regressão) pelo escopo. QA completo de um card → fluxo `/qa-card`.
+- Validação funcional, critérios de aceite, regressão ou reprodução de defeitos → QA. QA completo de um card do GitHub → fluxo `/qa-card` (Claude Code).
 - Auditoria, threat model, pentest ou validação de segurança → Cybersecurity.
 - Revisão final do código e visão da entrega → Reviewer, após as validações aplicáveis e antes do encerramento; usar também nas tarefas pontuais que entreguem código.
 - Trabalho transversal que necessite de todos os agentes → seguir o fluxo padrão completo acima; nos demais casos, encadear os papéis necessários respeitando as dependências.

@@ -107,18 +107,26 @@ testes nem declarar sucesso para encerrar o ciclo.
 | Preparar spec e unidades executáveis | `spec-ready` | PO / Spec Writer |
 | Isolar e combinar trabalho | `worktree-delivery` | GOD / Integrator |
 | Vincular aceite, revisão e evidência | `delivery-evidence` | QA / Reviewer |
-| Escopo de QA a partir de card | `qa-card-scope` | card-reader |
-| Casos rastreáveis ao aceite | `qa-test-design` | test-designer |
-| API (Postman/Bruno) e carga (k6) | `qa-api-testing`, `qa-k6-load` | QA API |
-| E2E Playwright e instabilidade | `qa-playwright`, `qa-flaky-triage` | QA Automatizado |
-| Sessão exploratória | `qa-exploratory-charter` | QA Exploratório |
-| Fluxos entre serviços e dados | `qa-integration-flows`, `qa-data-integrity` | QA Integração / integrity-checker |
-| Regressão por impacto | `qa-regression-impact` | QA Regressão / regression-runner |
-| Card de bug e relatório | `qa-bug-card`, `qa-relatorio` | bug-reporter / GOD |
+| Contrato comum do Fluctus (fontes, usuários, classificação) | `qa-fluctus` | todos os agentes de QA |
+| Ler card do GitHub | `qa-leitor-card` | leitor |
+| Diff entre commits e contexto unificado | `qa-verificador-diff` | verificador |
+| Itens de regressão, cobertura do módulo e execução | `qa-regressao` | regressao |
+| Perguntas até definir e especificação TC | `qa-questionador` | questionador (test-planner) |
+| Revisão da especificação e pré-checagem | `qa-spec-reviewer` | spec-reviewer |
+| UI, regressão de API e collections | `qa-executor` | test-executor |
+| Performance com k6 | `qa-performance-k6` | performance |
+| Auditoria de segurança | `audit-scope-readonly`, `controlled-vulnerability-validation`, `security-findings-report` + 7 externas | cibersecurity |
+| Documentação SDD por agente | `qa-documentador-sdd` | documentador |
+| Rascunhos de cards de bug | `qa-escritor-card` | escritor (bug-drafter) |
+| Worktrees e rodadas | `qa-worktree-frentes` | orquestrador |
+| Relatório e exploratório | `qa-relatorio`, `qa-exploratory-charter` | QA |
+| Investigar falha e provar antes de afirmar (superpowers, MIT) | `systematic-debugging`, `verification-before-completion` | test-executor, regressao, performance |
 
-No Claude Code, `.claude/agents/` registra os perfis de QA e `.claude/skills`
-aponta para `.agents/skills/`. O comando `/qa-card` fica em `.claude/commands/`;
-no Codex, o GOD segue as mesmas seis etapas daquele arquivo.
+Os agentes de QA existem só no Claude Code (`.claude/agents/`); `.claude/skills`
+aponta para `.agents/skills/`; comandos `/qa-card`, `/qa-modulo` e `/qa-ciber`
+em `.claude/commands/`.
+Skills externas aprovadas por agente: [QA-SKILLS-003](../specs/workflow/QA-SKILLS-003.md);
+instalação com `scripts/instalar-skills-qa.sh <projeto>`.
 
 As skills locais vivem em `.agents/skills/` e os registros Codex em
 `.codex/agents/`. Os perfis Markdown continuam sendo a fonte de instruções de

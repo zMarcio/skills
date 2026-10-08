@@ -51,23 +51,36 @@ Cada achado deve conter: identificador, título, requisito/spec, revisão e ambi
 
 Severidade descreve impacto; prioridade de correção pertence ao fluxo GOD/PO. Relacionar duplicatas e separar falhas preexistentes das introduzidas pela alteração quando houver evidência. Sanitizar logs e capturas antes de compartilhar ou versionar.
 
-## Especializações de QA
+## QA por card e por módulo (`/qa-card`, `/qa-modulo`)
 
-O QA pode ser executado por um perfil especializado quando o escopo pedir.
-Todos herdam os limites, severidades e o handoff deste perfil.
+No Claude Code, o QA roda com dez agentes de foco único. Com card, o foco é o
+fluxo pedido e suas dependências; na construção do zero (`/qa-modulo`), a
+cobertura é organizada por módulo. Todos herdam os limites, a sanitização e o
+handoff deste perfil, e o contrato comum do Fluctus (`qa-fluctus`).
 
-| Perfil | Foco | Definição |
-|---|---|---|
-| QA Integração | fluxos entre serviços, filas, webhooks, canais e integridade de dados | [qa-integracao](../qa-integracao/QA-INTEGRACAO.md) |
-| QA Automatizado | Playwright E2E estável e triagem de flaky | [qa-automatizado](../qa-automatizado/QA-AUTOMATIZADO.md) |
-| QA API | contrato, validação, auth, Postman/Bruno e carga k6 | [qa-api](../qa-api/QA-API.md) |
-| QA Exploratório | sessões com charter e heurísticas | [qa-exploratorio](../qa-exploratorio/QA-EXPLORATORIO.md) |
-| QA Regressão | seleção por impacto, baseline e falhas preexistentes | [qa-regressao](../qa-regressao/QA-REGRESSAO.md) |
+- **Leitor** (`qa-leitor-card`): lê o card com comentários, vínculos e anexos.
+- **Verificador** (`qa-verificador-diff`): o que mudou do commit anterior para o
+  atual; une isso ao contexto do leitor em `contexto-unificado.md`, que vai para
+  todos os agentes de execução; somente leitura.
+- **Regressão** (`qa-regressao`): mapa de itens de regressão (com card) ou
+  cobertura do módulo (sem card) e execução dos casos de regressão; somente leitura.
+- **Questionador / test-planner** (`qa-questionador`): rodadas de perguntas até
+  definir; gera a especificação em `~/test_cases` e roteia cada camada ao agente.
+- **Spec reviewer** (`qa-spec-reviewer`): revisa casos, critérios, dados,
+  pré-requisitos, autorizações e limpeza, e aponta bloqueios antes da execução.
+- **Test-executor** (`qa-executor`): Playwright para interface e regressão de
+  API; Bruno/Postman/Newman para collections e contratos.
+- **Performance** (`qa-performance-k6`): Camada Perf com k6 e travas de autorização.
+- **Cibersecurity** (`audit-scope-readonly` e demais): auditoria somente leitura,
+  réplica isolada para reproduções; também via `/qa-ciber`. Complementa o perfil
+  [Cybersecurity](../cybersecurity/CYBERSECURITY.md) do workflow geral.
+- **Documentador** (`qa-documentador-sdd`): docs SDD por agente, por card/módulo e por tela.
+- **Escritor / bug-drafter** (`qa-escritor-card`): reúne bugs novos, elimina
+  duplicatas, confere evidências e redige rascunhos (Comportamento atual / ideal /
+  Evidência / Possível causa) sem publicar.
 
-Fluxo por card (`/qa-card <card>`): card-reader → test-designer → test-executor →
-regression-runner → integrity-checker (se mexer em dados) → bug-reporter →
-relatório. Etapas em [qa-pipeline/](../qa-pipeline/) e comando em
-`.claude/commands/qa-card.md`. Skills `qa-*` em `.agents/skills/`.
+Frentes paralelas em worktrees e rodadas por usuário em `qa-worktree-frentes`.
+Fluxos em `.claude/commands/`; spec em `specs/workflow/QA-CARD-002.md`.
 
 ## Skills complementares
 

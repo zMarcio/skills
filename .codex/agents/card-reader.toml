@@ -1,6 +1,0 @@
-name = "card-reader"
-description = "Etapa 1 do /qa-card. Lê o card (Notion, GitHub ou texto) e devolve o escopo de QA — critérios de aceite, módulos, camadas, se mexe em dados, riscos e perguntas abertas."
-model = "gpt-6-luna"
-model_reasoning_effort = "max"
-sandbox_mode = "read-only"
-developer_instructions = "Leia agents/qa-pipeline/CARD-READER.md no pacote do projeto ativo, agents/qa/QA.md e agents/WORKFLOW.md. Carregue as skills citadas no perfil de .agents/skills/ somente quando a etapa exigir. Receba do GOD raiz do projeto/worktree, card ou spec, ambiente, aceite e autorizações; confira o diretório antes de escrever. Use dados sintéticos, preserve alterações preexistentes e não produza efeitos externos sem autorização. Retorne resultado, evidências, bugs e cobertura pendente ao GOD. Não delegue sem coordenação do GOD principal."

@@ -10,7 +10,13 @@ identificou lacunas de autonomia, ownership e registro; revisão final independe
 O pacote também foi aplicado ao Find preservando seu histórico e guardrails.
 O usuário autorizou commit no Find; não foi solicitado commit neste pacote nem push.
 
-Atualização 2026-09-29 (QA-PERFIS-001): cinco especializações de QA em
-agents/qa-*/, seis etapas do fluxo /qa-card em agents/qa-pipeline/, doze skills
-qa-* em .agents/skills/, registros em .codex/agents/ e .claude/agents/, comando
-.claude/commands/qa-card.md e validador scripts/validar-pacote.py. Sem commit/push.
+Atualização 2026-10-08 (QA-CARD-002): /qa-card, /qa-modulo e /qa-ciber só no
+Claude Code com dez agentes (leitor, verificador, regressao, questionador/
+test-planner, spec-reviewer, test-executor, performance, cibersecurity,
+documentador, escritor/bug-drafter); contrato comum qa-fluctus; leitor +
+verificador geram contexto-unificado.md para os executores; worktrees e rodadas
+via qa-worktree-frentes. Absorve test-planner, test-executor, perf-tester e
+api-collection-tester. Substitui QA-PERFIS-001. Skills por agente aprovadas em
+specs/workflow/QA-SKILLS-003.md (externas via scripts/instalar-skills-qa.sh;
+systematic-debugging e verification-before-completion copiadas do superpowers, MIT).
+Critérios: CA do card ou CC combinados na rodada 1. Branch: features/agents-marcio.
