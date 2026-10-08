@@ -8,11 +8,28 @@ description: Contrato comum dos agentes de QA no Fluctus — fontes de verdade e
 Vale para todos os agentes do `/qa-card`. Em conflito, este arquivo cede só ao
 requisito explícito do card e à decisão registrada do usuário.
 
+## Agentes e fases
+
+Três agentes de QA, mais a cibersecurity sob demanda. Os nomes antigos viraram
+fases — as skills usam esses nomes:
+
+- **planejador** — fases leitor (`qa-leitor-card`), verificador
+  (`qa-verificador-diff`), mapa de regressão (`qa-regressao`) e questionador /
+  test-planner (`qa-questionador`).
+- **executor** — fases UI/API/collections (`qa-executor`), regressão
+  (`qa-regressao`, execução), performance (`qa-performance-k6`) e documentador
+  (`qa-documentador-sdd`).
+- **revisor** — fases spec-reviewer (`qa-spec-reviewer`), revisão de código
+  (`qa-revisor-codigo`) e escritor / bug-drafter (`qa-escritor-card`).
+- **cibersecurity** — auditoria somente leitura, sob demanda.
+
+Quem revisa nunca é quem fez: o revisor confere o planejador (spec) e o executor (código).
+
 ## Fontes de verdade (ler antes de escrever qualquer teste)
 
 | O quê | Onde |
 |---|---|
-| Contexto do card | `.qa/<CARD_ID>/contexto-unificado.md` (leitor + verificador) — todo executor lê junto com a especificação TC |
+| Contexto do card | `.qa/<CARD_ID>/contexto-unificado.md` (fases leitor + verificador do planejador) — executor e cibersecurity leem junto com a especificação TC |
 | Suíte Playwright (UI e API) | `~/fluctus_automatizado` (Playwright Test, CommonJS, sem BDD) |
 | Mapa vivo do projeto | `~/fluctus_automatizado/docs/AI_CONTEXT.md` (§4.6: fatos do backend medidos ao vivo) |
 | Especificações de TC | `~/test_cases/TC_<numero>_<slug>.md` (também `TC_*` e `test_case-*` antigos) |
@@ -33,11 +50,11 @@ só para confirmar um ponto que ele não cobre. Executores **não** editam o
 
 | Camada (na especificação TC) | Agente | Ferramenta |
 |---|---|---|
-| `UI` | test-executor | Playwright browser |
-| `API` | test-executor | Playwright `tests/api/` (regressão versionada) |
-| `API-collection` | test-executor | Bruno/Postman/Newman (collections, contrato, smoke, exploração) |
-| `Perf` | performance | k6 |
-| `Regressão` | regressao | suítes e collections existentes dos itens `R*` do mapa de regressão |
+| `UI` | executor, fase ui-api (worktree `executor`) | Playwright browser |
+| `API` | executor, fase ui-api | Playwright `tests/api/` (regressão versionada) |
+| `API-collection` | executor, fase ui-api | Bruno/Postman/Newman (collections, contrato, smoke, exploração) |
+| `Perf` | executor, fase performance (`~/k6-fluctus`) | k6 |
+| `Regressão` | executor, fase regressão (worktree `regressao`) | suítes e collections existentes dos itens `R*` do mapa de regressão |
 
 Na dúvida entre `API` e `API-collection`, `API` (vira regressão no repo).
 Auditoria de segurança não é camada de TC: é a frente `cibersecurity`.
@@ -72,12 +89,13 @@ Regra de alocação (o orquestrador registra em `.qa/<CARD_ID>/frentes.md`):
 **duas frentes nunca usam o mesmo usuário ao mesmo tempo.** Conflito → as frentes
 rodam em rodadas diferentes. Padrão:
 
-- test-executor → usuários exigidos pelos casos de UI (inclui GOD/ANTONIO pela
-  suíte); casos de API e collections com chave de API (sem ela, SUPERVISOR/JOSE).
+- executor, fase ui-api → usuários exigidos pelos casos de UI (inclui GOD/ANTONIO
+  pela suíte); casos de API e collections com chave de API (sem ela, SUPERVISOR/JOSE).
   Dividido em duas instâncias (`executor-ui` ∥ `executor-api`), cada uma fica com
   o seu grupo de usuários — nunca o mesmo nas duas.
-- regressao → suíte de regressão (mesmos usuários da suíte) → **depois** do test-executor.
-- performance → ADMIN/ENDRIO, smoke; nunca junto de suíte Playwright com o mesmo usuário.
+- executor, fase regressão → mesmos usuários da suíte → **depois** da fase ui-api.
+- executor, fase performance → ADMIN/ENDRIO, smoke; nunca junto de suíte Playwright com o mesmo usuário.
+- revisor, fase código → reexecuta com os usuários da frente revisada, depois dela.
 - cibersecurity → não loga em homologação (réplica isolada).
 
 ## Critérios: CA e CC

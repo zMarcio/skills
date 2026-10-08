@@ -28,7 +28,7 @@ grep -q "confirmado em" <especificacao-TC> || echo "NÃO confirmada — parar"
 grep -Eq "^Veredito: APROVADA" <raiz>/.qa/<ID>/revisao-spec.md || echo "revisão não aprovou — parar"
 ```
 
-Ler na especificação: `INSTRUÇÕES PARA O TEST-EXECUTOR`, `Pré-requisitos e
+Ler na especificação: `INSTRUÇÕES PARA O EXECUTOR — UI/API/COLLECTIONS`, `Pré-requisitos e
 pré-checagem`, `Autorizações` e `Limpeza de dados`. Ler também o contexto,
 `test_users.md`, `docs/AI_CONTEXT.md` (mapa vivo — use em vez de varrer a árvore),
 `~/swagger-openapi.yaml` e as collections existentes. Reaproveitar fixtures,
@@ -170,7 +170,7 @@ Escrever **somente** `<raiz>/.qa/<ID>/resultado-executor.md`
 (`resultado-executor-ui.md` / `resultado-executor-api.md` quando dividido):
 
 ```markdown
-# Resultado — test-executor
+# Resultado — executor (ui-api)
 - Worktree: <caminho> · Branch: qa/<ID>/executor · Base: <sha>
 - Ambiente: <BASE_URL> · Navegador: chromium <versão> · Usuários/chave: <papéis>
 

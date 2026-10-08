@@ -53,34 +53,28 @@ Severidade descreve impacto; prioridade de correção pertence ao fluxo GOD/PO. 
 
 ## QA por card e por módulo (`/qa-card`, `/qa-modulo`)
 
-No Claude Code, o QA roda com dez agentes de foco único. Com card, o foco é o
-fluxo pedido e suas dependências; na construção do zero (`/qa-modulo`), a
-cobertura é organizada por módulo. Todos herdam os limites, a sanitização e o
-handoff deste perfil, e o contrato comum do Fluctus (`qa-fluctus`).
+No Claude Code, o QA roda com três agentes, mais a cibersecurity sob demanda.
+Com card, o foco é o fluxo pedido e suas dependências; na construção do zero
+(`/qa-modulo`), a cobertura é organizada por módulo. Quem revisa nunca é quem fez.
+Todos herdam os limites, a sanitização e o handoff deste perfil, e o contrato
+comum do Fluctus (`qa-fluctus`).
 
-- **Leitor** (`qa-leitor-card`): lê o card com comentários, vínculos e anexos.
-- **Verificador** (`qa-verificador-diff`): o que mudou do commit anterior para o
-  atual; une isso ao contexto do leitor em `contexto-unificado.md`, que vai para
-  todos os agentes de execução; somente leitura.
-- **Regressão** (`qa-regressao`): mapa de itens de regressão (com card) ou
-  cobertura do módulo (sem card) e execução dos casos de regressão; somente leitura.
-- **Questionador / test-planner** (`qa-questionador`): rodadas de perguntas até
-  definir; gera a especificação em `~/test_cases` e roteia cada camada ao agente.
-- **Spec reviewer** (`qa-spec-reviewer`): revisa casos, critérios, dados,
-  pré-requisitos, autorizações e limpeza, e aponta bloqueios antes da execução.
-- **Test-executor** (`qa-executor`): Playwright para interface e regressão de
-  API; Bruno/Postman/Newman para collections e contratos.
-- **Performance** (`qa-performance-k6`): Camada Perf com k6 e travas de autorização.
-- **Cibersecurity** (`audit-scope-readonly` e demais): auditoria somente leitura,
-  réplica isolada para reproduções; também via `/qa-ciber`. Complementa o perfil
+- **Planejador** — lê o card (`qa-leitor-card`), compara commits e une tudo no
+  contexto unificado (`qa-verificador-diff`), monta o mapa de regressão ou a
+  cobertura do módulo (`qa-regressao`) e conduz as rodadas até gerar a
+  especificação TC (`qa-questionador`, o antigo test-planner).
+- **Executor** — UI, regressão de API e collections (`qa-executor`), regressão no
+  worktree próprio (`qa-regressao`), performance com k6 (`qa-performance-k6`) e a
+  documentação SDD do que criou (`qa-documentador-sdd`).
+- **Revisor** — revisa a especificação antes da execução (`qa-spec-reviewer`),
+  valida o código do executor reexecutando (`qa-revisor-codigo`) e redige os cards
+  dos bugs novos sem publicar (`qa-escritor-card`, o bug-drafter).
+- **Cibersecurity** — auditoria somente leitura, réplica isolada para
+  reproduções; também via `/qa-ciber`. Complementa o perfil
   [Cybersecurity](../cybersecurity/CYBERSECURITY.md) do workflow geral.
-- **Documentador** (`qa-documentador-sdd`): docs SDD por agente, por card/módulo e por tela.
-- **Escritor / bug-drafter** (`qa-escritor-card`): reúne bugs novos, elimina
-  duplicatas, confere evidências e redige rascunhos (Comportamento atual / ideal /
-  Evidência / Possível causa) sem publicar.
 
-Frentes paralelas em worktrees e rodadas por usuário em `qa-worktree-frentes`.
-Fluxos em `.claude/commands/`; spec em `specs/workflow/QA-CARD-002.md`.
+Worktrees e rodadas por usuário em `qa-worktree-frentes`. Fluxos em
+`.claude/commands/`; spec em `specs/workflow/QA-AGENTES-004.md`.
 
 ## Skills complementares
 

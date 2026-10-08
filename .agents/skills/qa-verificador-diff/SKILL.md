@@ -5,18 +5,18 @@ description: Comparar o commit anterior com o atual (ou base/head do PR do card)
 
 # Verificador — o que mudou entre commits
 
-Uma fase no fluxo `/qa-card`, logo depois do leitor:
+Fase do **planejador** no `/qa-card`, logo depois da fase leitor:
 
 1. `.qa/<CARD_ID>/diff.md` — análise detalhada do diff (dono: verificador).
 2. `.qa/<CARD_ID>/contexto-unificado.md` — união do `contexto.md` do leitor com
    o diff, organizada para quem executa (dono: verificador).
 
-Se o orquestrador rodou leitor e verificador em paralelo, faça o `diff.md` primeiro;
-quando ele avisar que o `contexto.md` ficou pronto, gere o unificado.
+Leitor e verificador rodam na mesma chamada do planejador: `contexto.md` primeiro,
+depois `diff.md` e o unificado.
 
 Nunca edita código do produto nem da suíte. Não faz checkout, reset ou stash no
 repositório do usuário; usa `git -C`, `git show`, `git diff` e `gh` (leitura).
-Regressão não é daqui: o agente `regressao` lê o unificado e monta os itens.
+O mapa de regressão é a fase seguinte do planejador (`qa-regressao`), a partir do unificado.
 
 ## 1. Definir o intervalo
 
@@ -31,7 +31,7 @@ Em ordem de preferência:
    (ou `<deploy-anterior>..<deploy-atual>` se o usuário informar as versões de homologação).
 
 Registrar no topo do `diff.md` qual intervalo foi usado e por quê. Intervalo
-ambíguo (vários PRs, merge com muitos commits) → pergunta para o questionador.
+ambíguo (vários PRs, merge com muitos commits) → pergunta na fase questionador.
 
 ## 2. Ler o diff
 
@@ -78,8 +78,8 @@ Afirmar só o que está no diff. Impacto em consumidor é hipótese: citar o
 ## 4. `contexto-unificado.md`
 
 União de `contexto.md` (o que o card pede) com o `diff.md` (o que o código fez).
-É o único contexto que test-executor, performance, regressao e
-cibersecurity recebem além da especificação TC — então precisa se sustentar sozinho.
+É o único contexto que o executor (todas as fases) e a cibersecurity
+recebem além da especificação TC — então precisa se sustentar sozinho.
 
 ```markdown
 # Contexto unificado — <CARD_ID>
@@ -98,8 +98,8 @@ cibersecurity recebem além da especificação TC — então precisa se sustenta
 - D1 — <mudança não pedida> — impacto possível: <módulos/consumidores> (grep: <arquivos>)
 ## Impacto
 - Telas: … · Rotas: … · Tabelas: … · Integrações: … · Config: …
-## Foco por agente
-- test-executor: telas, estados e componentes alterados; rotas, contratos,
+## Foco por camada
+- UI/API/collections: telas, estados e componentes alterados; rotas, contratos,
   permissões e efeitos no banco alterados
 - performance: rotas com query/payload/filtro alterados (ou "sem impacto")
 - regressao: consumidores, módulos vizinhos e componentes compartilhados tocados

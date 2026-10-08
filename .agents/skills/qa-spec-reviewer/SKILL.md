@@ -18,7 +18,7 @@ com card, `cobertura.md` sem card), `regressao.md` (com card), `decisoes.md`,
 
 - Todo critério — `CA*` do card ou `CC*` confirmado em `decisoes.md` — tem ao
   menos um caso ou exclusão decidida. Card sem CA é normal; card sem CA **e** sem
-  `CC*` confirmado é bloqueio do questionador.
+  `CC*` confirmado é bloqueio do planejador.
 - Todo caso aponta para `CA*`/`CC*`, risco `D*`, item `R*` ou premissa `P*`; caso sem origem é apontado.
 - Um objetivo por caso; passos executáveis sem reinterpretar o card; resultado
   esperado observável (texto, status HTTP, linha no banco, métrica).
@@ -77,7 +77,7 @@ Escrever **somente** `<raiz>/.qa/<ID>/revisao-spec.md`:
 Veredito: APROVADA | APROVADA COM RESSALVAS | BLOQUEADA
 
 ## Bloqueios (impedem executar)
-- B1 · dono: questionador | usuário | ambiente — <o que> — como destravar: <ação>
+- B1 · dono: planejador | usuário | ambiente — <o que> — como destravar: <ação>
 ## Ressalvas (executa, mas registra)
 - S1 — <o que> — impacto: <casos afetados>
 ## Pré-checagem
@@ -92,5 +92,5 @@ Veredito: APROVADA | APROVADA COM RESSALVAS | BLOQUEADA
 ```
 
 Retorno ao orquestrador: veredito, nº de bloqueios por dono e o caminho.
-`BLOQUEADA` volta ao questionador (bloqueios dele) e ao usuário (os do usuário);
+`BLOQUEADA` volta ao planejador (bloqueios dele) e ao usuário (os do usuário);
 nova versão da especificação passa por nova revisão.

@@ -10,7 +10,7 @@ testes, altera código ou implementa automação — isso é dos agentes de cada
 
 Antes de qualquer caso, fechar com o usuário **o que** testar, **o foco** e
 **como**. Repetir rodadas até não sobrar dúvida que mude o resultado. Caso só
-existe depois disso; a especificação passa pelo `spec-reviewer` e pela
+existe depois disso; a especificação passa pela revisão (revisor, fase spec) e pela
 confirmação do usuário antes de ser dividida entre os agentes.
 
 ## 0. Modo
@@ -62,7 +62,7 @@ nas collections. Caso já coberto é referenciado, não duplicado.
 ### Rodadas seguintes
 
 Só o que segue aberto: lacunas `L*`, conflitos card × diff, lacunas de cobertura
-do mapa, respostas que abriram dúvidas novas, bloqueios do `spec-reviewer` que
+do mapa, respostas que abriram dúvidas novas, bloqueios da revisão de spec que
 são do usuário. Nunca repetir pergunta já respondida em `decisoes.md`.
 
 ### Regras
@@ -93,17 +93,19 @@ Pendentes após esta rodada: <lista curta ou "nenhuma">
 ```text
 ESTADO: DEFINIDO
 Arquivo: ~/test_cases/<arquivo>.md
-Casos por agente: test-executor <a> (UI <x> · API <y> · API-collection <z>) · performance <b> · regressao <c>
+Casos por fase do executor: ui-api <a> (UI <x> · API <y> · API-collection <z>) · performance <b> · regressão <c>
 Cibersecurity: sim | não
 ```
 
 ## 4. Roteamento (Camada → agente)
 
-- `UI` → **test-executor** (Playwright browser).
-- `API` → **test-executor** (Playwright `tests/api/`, regressão versionada).
-- `API-collection` → **test-executor** (Bruno/Postman/Newman: collections e contratos).
-- `Perf` → **performance** (k6; nível de carga conforme autorização).
-- `Regressão` → **regressao** (suítes e collections existentes dos itens `R*`).
+Todas as camadas vão para o **executor**, em fases:
+
+- `UI`, `API`, `API-collection` → fase ui-api (Playwright browser, Playwright
+  `tests/api/`, Bruno/Postman/Newman).
+- `Regressão` → fase regressão (suítes e collections existentes dos itens `R*`,
+  no worktree `regressao`).
+- `Perf` → fase performance (k6; nível de carga conforme autorização).
 
 Na dúvida entre `API` e `API-collection`, `API`. Segurança não é camada: é a
 frente `cibersecurity`, decidida na rodada 1.
@@ -124,7 +126,7 @@ Ordem obrigatória:
 3. **Dados de teste**: existentes do `test_users.md` e os que faltam (dado, valor sugerido, motivo).
 4. **Pré-requisitos e pré-checagem**: usuários/papéis, licença CRM, canal de teste,
    config/feature flag, ferramentas, variáveis de credencial (só nomes), arquivos
-   que precisam existir — o que o `spec-reviewer` vai conferir.
+   que precisam existir — o que a revisão de spec vai conferir.
 5. **Autorizações**: o que foi autorizado e o que não (carga, `[destrutivo]`, `.env`,
    escrita fora do prefixo), com a rodada que decidiu.
 6. **Casos de teste** — tabela com colunas fixas, nesta ordem:
@@ -147,8 +149,8 @@ Ordem obrigatória:
    por tela: `Tela X → UI TC-…, API TC-…, Perf —` (lacunas explícitas).
 10. Instruções por agente, só para os agentes com casos, com tudo para executar
     sem reinterpretar (telas, rotas, seletores conhecidos, massa, usuário, ordem, limpeza):
-    `INSTRUÇÕES PARA O TEST-EXECUTOR` · `INSTRUÇÕES PARA A PERFORMANCE` ·
-    `INSTRUÇÕES PARA A REGRESSÃO` (citando os `R*`)
+    `INSTRUÇÕES PARA O EXECUTOR — UI/API/COLLECTIONS` · `… — PERFORMANCE` ·
+    `… — REGRESSÃO` (citando os `R*`)
 
 Técnicas: partição + valor limite (faixa/formato), tabela de decisão (várias
 condições), transição de estado (status; repetida/duplo clique), pairwise
@@ -158,7 +160,7 @@ Camada mais barata que detecta o defeito (API antes de UI). Um objetivo por caso
 
 ## 6. Revisão e confirmação
 
-1. O orquestrador manda a especificação ao **spec-reviewer**. Bloqueio cujo dono
+1. O orquestrador manda a especificação ao **revisor** (fase spec). Bloqueio cujo dono
    é você → corrigir e gerar nova versão (nova revisão). Bloqueio do usuário →
    volta como pergunta numa rodada.
 2. Com `APROVADA` (ou com ressalvas), o status vira `Status: aguardando confirmação`

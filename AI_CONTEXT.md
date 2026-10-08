@@ -10,13 +10,11 @@ identificou lacunas de autonomia, ownership e registro; revisão final independe
 O pacote também foi aplicado ao Find preservando seu histórico e guardrails.
 O usuário autorizou commit no Find; não foi solicitado commit neste pacote nem push.
 
-Atualização 2026-10-08 (QA-CARD-002): /qa-card, /qa-modulo e /qa-ciber só no
-Claude Code com dez agentes (leitor, verificador, regressao, questionador/
-test-planner, spec-reviewer, test-executor, performance, cibersecurity,
-documentador, escritor/bug-drafter); contrato comum qa-fluctus; leitor +
-verificador geram contexto-unificado.md para os executores; worktrees e rodadas
-via qa-worktree-frentes. Absorve test-planner, test-executor, perf-tester e
-api-collection-tester. Substitui QA-PERFIS-001. Skills por agente aprovadas em
-specs/workflow/QA-SKILLS-003.md (externas via scripts/instalar-skills-qa.sh;
-systematic-debugging e verification-before-completion copiadas do superpowers, MIT).
-Critérios: CA do card ou CC combinados na rodada 1. Branch: features/agents-marcio.
+Atualização 2026-10-08 (QA-AGENTES-004): /qa-card, /qa-modulo e /qa-ciber só no
+Claude Code com três agentes — planejador (leitor, verificador, mapa de regressão,
+questionador/test-planner), executor (UI/API/collections, regressão em worktree
+próprio, performance, documentação) e revisor (spec-reviewer, revisão de código,
+escritor/bug-drafter) — mais cibersecurity sob demanda. Skills por fase em
+.agents/skills/qa-*; mapa de fases em qa-fluctus. Skills externas aprovadas em
+specs/workflow/QA-SKILLS-003.md (scripts/instalar-skills-qa.sh). Critérios: CA do
+card ou CC combinados na rodada 1. Branch: features/agents-marcio.

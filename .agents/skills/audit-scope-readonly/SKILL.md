@@ -10,7 +10,7 @@ lido, onde gravar e quais skills acionar.
 
 ## 1. Modo
 
-- **Com card**: recebe o `contexto-unificado.md` (leitor + verificador; detalhe
+- **Com card**: recebe o `contexto-unificado.md` (do planejador; detalhe
   por arquivo em `diff.md`). Foco
   em objetivo, regras de negócio e critérios de aceite (ou os critérios combinados
   `CC*`, já que o card costuma não ter CA): o que o card permite,

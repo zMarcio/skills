@@ -97,8 +97,7 @@ for md in [p for p in ROOT.rglob("*.md") if ".git" not in p.parts]:
 
 # 7. Comando /qa-card cita os seis agentes, e cada um existe
 cmd = ROOT / ".claude/commands/qa-card.md"
-agentes_card = ("leitor", "verificador", "regressao", "questionador", "spec-reviewer", "test-executor",
-                "performance", "cibersecurity", "documentador", "escritor")
+agentes_card = ("planejador", "executor", "revisor", "cibersecurity")
 if cmd.exists():
     texto = cmd.read_text(encoding="utf-8")
     for ag in agentes_card:

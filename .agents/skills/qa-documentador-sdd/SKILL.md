@@ -1,6 +1,6 @@
 ---
 name: qa-documentador-sdd
-description: Documentar no padrão SDD os testes criados por cada agente — pede ao agente responsável a explicação do que fez, confere no código e grava em docs/testes/<agente>/ um arquivo por card (código automatizado criado para o card) e um por tela (sequência automatizada pensada para a tela), além de aplicar as propostas ao AI_CONTEXT.md.
+description: Fase documentador do executor — documentar no padrão SDD os testes que o próprio executor criou (e a auditoria da cibersecurity, quando houver), conferir no código e gravar em docs/testes/<agente>/ um arquivo por card (código automatizado criado para o card) e um por tela (sequência automatizada pensada para a tela), além de aplicar as propostas ao AI_CONTEXT.md; pede explicação ao agente responsável quando não foi ele quem fez.
 ---
 
 # Documentador (SDD)
@@ -11,24 +11,26 @@ tela acumula a sequência do que já está automatizado nela.
 
 ## Onde
 
-Repo da suíte (`~/fluctus_automatizado`), no worktree `qa/<CARD_ID>/documentador`
-— só o documentador escreve aqui, e o patch dele vai junto com os das frentes.
+Repo da suíte (`~/fluctus_automatizado`), no worktree `qa/<ID>/executor` — o
+mesmo do código, então docs e testes saem no mesmo patch. Quando a fase ui-api
+foi dividida (`executor-ui` ∥ `executor-api`), a documentação vai para o worktree
+`qa/<ID>/documentador`, feita por uma instância só.
 
 ```text
 docs/testes/
-├── test-executor/  <numero>-<slug-do-card>.md · tela-<slug-da-tela>.md · README.md
-├── performance/    <numero>-<slug-do-card>.md · tela-<slug-da-tela>.md · README.md
-├── regressao/      <numero>-<slug-do-card>.md · README.md
+├── executor/       <numero>-<slug-do-card>.md · tela-<slug-da-tela>.md · modulo-<slug>.md · README.md
 └── cibersecurity/  <numero>-<slug-do-card>.md · modulo-<slug>.md · README.md
 ```
+
+No arquivo de card do executor, uma seção por fase que teve trabalho: UI/API/
+collections, regressão e performance.
 
 - **Arquivo de card**: o código automatizado criado para aquele card de teste.
 - **Arquivo de tela**: a definição do que está automatizado naquela tela, em
   sequência — na ordem em que a tela é usada (UI, API e collections daquela tela
-  juntos). Performance usa o
-  nome da tela que as rotas servem (ex.: `tela-cadastros-filas.md`). Construção do zero: um
-  arquivo `modulo-<slug>.md` por agente, com a cobertura do módulo tela a tela.
-- Regressão documenta o mapa de itens e a execução do card (não cria código; sem arquivo de tela).
+  juntos; performance entra na tela que as rotas servem, ex.: `tela-cadastros-filas.md`).
+  Construção do zero: `modulo-<slug>.md`, com a cobertura do módulo tela a tela.
+- Regressão entra no arquivo de card como seção (itens `R*`, suítes rodadas, resultado).
 - Cibersecurity documenta a auditoria; auditoria sem card vira `modulo-<slug>.md`.
 - `README.md` de cada pasta: índice com uma linha por arquivo (atualizar sempre).
 - Agente que não criou código nem executou nada no card: sem arquivo; registrar no retorno.
@@ -37,23 +39,24 @@ Slug: minúsculas, sem acento, hífens (`Painel de Atendimento` → `painel-de-a
 
 ## 1. Coletar e pedir explicação
 
-Ler `## Handoff de documentação` de cada `.qa/<CARD_ID>/resultado-<agente>.md`,
-a especificação TC e `decisoes.md`. Conferir nos worktrees das frentes (leitura)
-que cada arquivo/teste citado existe: `rg -n "TC-<numero>-" <worktree>/tests`.
+Ler `## Handoff de documentação` de cada `.qa/<ID>/resultado-*.md`, a
+especificação TC, `decisoes.md` e os vereditos `revisao-codigo-*.md` (documentar
+o código **aprovado**, já com as correções). Conferir no worktree que cada
+arquivo/teste citado existe: `rg -n "TC-<numero>-" <worktree>/tests`.
 
-Faltou algo para escrever sem adivinhar (por que um seletor, o que um helper faz,
-ordem da sequência na tela, como limpar dados)? Pedir **ao agente responsável**:
+Quem criou documenta: o executor explica o próprio código. Pedir explicação só
+quando não foi esta instância que fez — a outra metade de uma divisão
+`executor-ui`/`executor-api`, ou a auditoria da cibersecurity:
 
 ```text
 ESTADO: PEDIDOS
-test-executor: 1) <pergunta objetiva> 2) …
-performance: 1) …
+executor-api: 1) <pergunta objetiva> 2) …
+cibersecurity: 1) …
 ```
 
-O orquestrador repassa ao agente (SendMessage); o agente responde acrescentando
-`## Explicação para o documentador` ao próprio `resultado-<agente>.md`. Releia e
-repita até não faltar nada. Nunca preencher lacuna com suposição: o que ninguém
-explicou fica como `Pendente: <o quê>`.
+O orquestrador repassa ao agente (SendMessage); ele responde acrescentando
+`## Explicação para o documentador` ao próprio `resultado-*.md`. Nunca preencher
+lacuna com suposição: o que ninguém explicou fica como `Pendente: <o quê>`.
 
 ## 2. Arquivo de card (SDD)
 
@@ -61,7 +64,7 @@ explicou fica como `Pendente: <o quê>`.
 # <numero> — <título do card>
 - Card: <link> · CARD_ID: <id> · Agente: <agente>
 - Especificação TC: ~/test_cases/TC_<numero>_<slug>.md · Rodadas: <n>
-- Branch/base: qa/<CARD_ID>/<agente> @ <sha> · Data: <AAAA-MM-DD>
+- Branch/base: qa/<ID>/executor @ <sha> · Data: <AAAA-MM-DD>
 
 ## 1. Especificação
 - Objetivo do card em uma frase
@@ -129,15 +132,15 @@ passo em que atua.
 
 ## 4. AI_CONTEXT.md
 
-Aplicar no worktree do documentador as "Propostas para AI_CONTEXT.md" dos
+Aplicar no worktree da documentação as "Propostas para AI_CONTEXT.md" dos
 handoffs (testes, helpers, fixtures novos). Único escritor desse arquivo no card.
 
 ## 5. Retorno
 
 ```text
 ESTADO: DOCUMENTADO
-Criados: docs/testes/test-executor/5316-filtro-de-filas.md, …
-Atualizados: docs/testes/test-executor/tela-cadastros-filas.md, docs/AI_CONTEXT.md
+Criados: docs/testes/executor/5316-filtro-de-filas.md, …
+Atualizados: docs/testes/executor/tela-cadastros-filas.md, docs/AI_CONTEXT.md
 Sem documentação: <agente — motivo>
 Pendências: <o que ninguém explicou>
 ```

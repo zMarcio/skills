@@ -15,6 +15,9 @@ Como ficou ligado:
 
 Skill externa não instalada não trava o agente: ele segue e registra a ausência.
 
+Atualização: os agentes abaixo viraram fases de planejador, executor e revisor
+([QA-AGENTES-004](QA-AGENTES-004.md), que traz as skills agrupadas por agente).
+
 ## Por agente
 
 ### 1. Leitor

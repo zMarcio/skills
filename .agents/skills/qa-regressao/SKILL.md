@@ -7,21 +7,24 @@ description: Mapear e mostrar os itens de regressão de um card — telas, rotas
 
 Três fases:
 
-- **mapa** (`/qa-card`, antes das perguntas): a partir de `contexto-unificado.md`,
-  montar `.qa/<CARD_ID>/regressao.md` — os itens que podem ter quebrado, com a
-  cobertura que já existe e as lacunas. O questionador usa o mapa e o usuário
-  decide o escopo.
-- **cobertura** (`/qa-modulo`, construção do zero): montar
+- **mapa** (planejador, `/qa-card`, antes das perguntas): a partir de
+  `contexto-unificado.md`, montar `.qa/<CARD_ID>/regressao.md` — os itens que
+  podem ter quebrado, com a cobertura que já existe e as lacunas. O mapa entra
+  nas rodadas de perguntas e o usuário decide o escopo.
+- **cobertura** (planejador, `/qa-modulo`, construção do zero): montar
   `.qa/mod-<modulo>/cobertura.md` — telas, rotas e tabelas do módulo com a
-  cobertura existente por camada. É o contexto do questionador e dos executores.
-- **execução** (rodada B): rodar os casos `Camada = Regressão` confirmados.
+  cobertura existente por camada. É o contexto do planejamento e da execução.
+- **execução** (executor, rodada B): rodar os casos `Camada = Regressão`
+  confirmados no worktree `regressao`.
 
-Somente leitura no código do produto e na suíte: não cria nem edita teste.
-Lacuna de cobertura vira sugestão de caso novo para o questionador.
+Não altera código do produto, specs nem collections: não cria nem edita teste.
+A execução gera relatório, traces e dados de teste na homologação — os arquivos
+ficam no worktree `regressao` e na pasta do card, nunca no checkout principal.
+Lacuna de cobertura vira sugestão de caso novo no planejamento.
 
 ## 1. Levantar itens
 
-Do `contexto-unificado.md` (seções Impacto, Além do card e Foco por agente) e
+Do `contexto-unificado.md` (seções Impacto, Além do card e Foco por camada) e
 do `diff.md` (arquivos e consumidores):
 
 - Consumidores no estado atual do código: `git -C <repo> grep -n "<rota|função|tabela|componente>" <para>`.
@@ -69,7 +72,7 @@ código alterado; na suíte separada, vale o cruzamento acima.
 - R2 · Média · `GET /api/queues` — consumidor: Dashboard de filas
   - Cobertura: collection Postman "Filas" (4 requests) · Lacuna: nenhuma
 
-## Sem cobertura (sugestão de caso para o questionador)
+## Sem cobertura (sugestão de caso para a fase questionador)
 - R1 — editar fila com perfil god mantém os usuários vinculados
 ```
 
@@ -105,16 +108,24 @@ produto, o mapa vem só dessas fontes — dizer isso no topo.
 ## 6. Execução (rodada B)
 
 Casos `Camada = Regressão` da especificação confirmada (cada caso cita os `R*`).
-Usuários alocados em `frentes.md` — a suíte usa os mesmos usuários do test-executor,
-por isso esta fase roda depois dele.
+Usuários alocados em `frentes.md` — a suíte usa os mesmos usuários da fase de
+UI/API, por isso esta fase roda depois dela.
+
+Worktree próprio, criado com `qa-frentes.sh criar <ID> regressao`: é a suíte na
+base, sem o código novo do card — os testes existentes rodam como estavam.
 
 ```bash
-cd ~/fluctus_automatizado
+cd <…qa-wt>/<ID>/regressao && git branch --show-current     # qa/<ID>/regressao
+set -a; . ./.qa-frente.env; set +a     # QA_SAIDA e PLAYWRIGHT_HTML_REPORT na pasta do card
 npx playwright test <specs dos itens> --project=chromium \
-  --output .qa/<CARD_ID>/regressao/test-results --reporter=list,html
+  --output "$QA_SAIDA/test-results" --reporter=list,html
 newman run <collection> -e <env> --folder "<pasta>" -r cli,htmlextra \
-  --reporter-htmlextra-export .qa/<CARD_ID>/regressao/<pasta>.html
+  --reporter-htmlextra-export "$QA_SAIDA/<pasta>.html"
 ```
+
+Login: se o `playwright.config` grava o `storageState` num caminho do repo, ele
+cai no worktree `regressao` (descartável), não no checkout principal. Se o config
+aceitar variável para o caminho, aponte para `$QA_SAIDA/.auth/`.
 
 Baseline, em ordem: último relatório do CI ou execução salva; resultado do mesmo
 teste na versão anterior (se houver ambiente dela); histórico do spec (`git log -p`).

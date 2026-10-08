@@ -36,7 +36,7 @@ need claude
 run claude plugin marketplace add trailofbits/skills
 run claude plugin marketplace add trailofbits/skills-curated
 run claude plugin marketplace add anthropics/knowledge-work-plugins
-# Leitor, Verificador e Escritor: gh-cli · Cibersecurity: 1–7, 11 e 12
+# Planejador e Revisor: gh-cli · Cibersecurity: 1–7, 11 e 12
 for p in gh-cli audit-context-building static-analysis fp-check differential-review \
          variant-analysis supply-chain-risk-auditor insecure-defaults; do
   run claude plugin install "$p@trailofbits"
@@ -44,7 +44,7 @@ done
 for p in openai-security-threat-model openai-security-best-practices; do
   run claude plugin install "$p@skills-curated"
 done
-# Questionador: testing-strategy · Test-executor: accessibility-review
+# Planejador: testing-strategy · Executor: accessibility-review · Revisor: code-review
 run claude plugin install engineering@knowledge-work-plugins
 run claude plugin install design@knowledge-work-plugins
 

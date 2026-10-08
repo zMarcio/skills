@@ -1,6 +1,8 @@
 # QA-CARD-002 — agentes de QA por card e por módulo (Claude Code)
 
 Estado: concluído tecnicamente; publicado na branch `features/agents-marcio` (sem merge).
+Agentes reorganizados em [QA-AGENTES-004](QA-AGENTES-004.md): os dez agentes abaixo
+viraram fases de planejador, executor e revisor; fluxo e regras continuam valendo.
 Substitui: [QA-PERFIS-001](QA-PERFIS-001.md). Skills por agente aprovadas em
 [QA-SKILLS-003](QA-SKILLS-003.md).
 

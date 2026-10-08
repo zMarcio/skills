@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Worktrees por frente de um card de QA.
 #
-#   qa-frentes.sh criar   <CARD_ID> [frente ...] [--env]   (padrão: executor documentador)
+#   qa-frentes.sh criar   <CARD_ID> [frente ...] [--env]   (padrão: executor regressao)
 #   qa-frentes.sh status  <CARD_ID>
 #   qa-frentes.sh coletar <CARD_ID>
 #   qa-frentes.sh remover <CARD_ID> <frente>
@@ -44,11 +44,11 @@ cmd_criar() {
   for a in "$@"; do
     case "$a" in
       --env) env=1 ;;
-      executor|executor-ui|executor-api|documentador) frentes+=("$a") ;;
-      *) die "frente desconhecida: $a (executor|executor-ui|executor-api|documentador)" ;;
+      executor|executor-ui|executor-api|regressao|documentador) frentes+=("$a") ;;
+      *) die "frente desconhecida: $a (executor|executor-ui|executor-api|regressao|documentador)" ;;
     esac
   done
-  [ ${#frentes[@]} -gt 0 ] || frentes=(executor documentador)
+  [ ${#frentes[@]} -gt 0 ] || frentes=(executor regressao)
 
   local base; base=$(git -C "$RAIZ" rev-parse HEAD)
   if [ -n "$(git -C "$RAIZ" status --porcelain --untracked-files=normal -- . ':!.qa')" ]; then
@@ -108,6 +108,15 @@ cmd_coletar() {
     [ -n "$wt" ] || continue
     local f=${br##*/} base out
     base=$(sed -n 's/^QA_BASE=//p' "$wt/.qa-frente.env")
+    if [ "$f" = regressao ]; then      # só execução: nada a entregar
+      local sujo; sujo=$(git -C "$wt" status --porcelain | grep -v -e ' \.qa-frente\.env$' -e ' node_modules$' -e ' \.env$' || true)
+      if [ -n "$sujo" ]; then
+        echo "AVISO regressao: worktree tem arquivos gerados (não viram patch):"; echo "$sujo" | sed 's/^/  /'
+      else
+        echo "regressao: sem alterações (esperado)"
+      fi
+      continue
+    fi
     out="$destino/$f.patch"
     {
       git -C "$wt" diff --binary "$base" -- . ':!.qa-frente.env' ':!node_modules' ':!.env'
