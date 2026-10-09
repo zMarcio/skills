@@ -18,3 +18,9 @@ escritor/bug-drafter) — mais cibersecurity sob demanda. Skills por fase em
 .agents/skills/qa-*; mapa de fases em qa-fluctus. Skills externas aprovadas em
 specs/workflow/QA-SKILLS-003.md (scripts/instalar-skills-qa.sh). Critérios: CA do
 card ou CC combinados na rodada 1. Branch: features/agents-marcio.
+
+Atualização 2026-10-09 (QA-INTEGRADOR-005): quarto agente de QA, integrador —
+revisão profunda e otimização do código aprovado (sem mudar comportamento),
+pertinência de cada teste frente aos TCs, integração das frentes no worktree
+`integracao` com reparo de conflitos, verificação pre-push e merge; avulso via
+/qa-integrar. Commit, merge e push só com autorização.

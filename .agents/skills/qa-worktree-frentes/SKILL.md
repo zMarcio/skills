@@ -1,6 +1,6 @@
 ---
 name: qa-worktree-frentes
-description: Criar, acompanhar, coletar e remover os worktrees das frentes de QA (executor — opcionalmente dividido em executor-ui e executor-api —, regressao e documentador) com scripts/qa-frentes.sh, e organizar as rodadas de execução respeitando o limite de sessão por usuário do Fluctus — base conhecida, prefixo de dados, pastas de saída, estado em .qa/<ID>/ e entrega por patch revisável.
+description: Criar, acompanhar, coletar e remover os worktrees das frentes de QA (executor — opcionalmente dividido em executor-ui e executor-api —, regressao, documentador e integracao) com scripts/qa-frentes.sh, e organizar as rodadas de execução respeitando o limite de sessão por usuário do Fluctus — base conhecida, prefixo de dados, pastas de saída, estado em .qa/<ID>/ e entrega por patch revisável.
 ---
 
 # Worktrees e rodadas
@@ -31,7 +31,8 @@ cópias temporárias ficam no worktree da frente ou em `.qa/<ID>/`.
 └── fluctus_automatizado.qa-wt/<ID>/
     ├── executor/      qa/<ID>/executor        tests/…, tests/api/…, docs/testes/executor/, docs/AI_CONTEXT.md
     │   (ou executor-ui/ e executor-api/ + documentador/ quando dividido)
-    └── regressao/     qa/<ID>/regressao       suíte na base; só execução, sem mudança de código
+    ├── regressao/     qa/<ID>/regressao       suíte na base; só execução, sem mudança de código
+    └── integracao/    qa/<ID>/integracao      integrador: patches combinados, conflitos, pre-push
 ```
 
 Sem worktree: performance (`~/k6-fluctus`), cibersecurity (réplica própria em
@@ -85,7 +86,9 @@ disparar, o orquestrador acrescenta a alocação ao `frentes.md`:
 - Rodada A: executor ui-api — GOD/ANTONIO (suíte) + chave de API · cibersecurity — réplica
 - Rodada B: executor regressão — usuários da suíte · executor performance — ADMIN/ENDRIO (smoke)
 - Rodada C: revisor código — usuários da frente revisada
-- Rodada D: executor documentação · revisor bugs
+- Rodada D: integrador otimizar — usuários da frente otimizada
+- Rodada E: executor documentação · revisor bugs
+- Entrega: integrador integrar + pre-push — usuários da suíte
 ```
 
 - **A**: executor fase ui-api (ou executor-ui ∥ executor-api) ∥ cibersecurity.
@@ -93,15 +96,20 @@ disparar, o orquestrador acrescenta a alocação ao `frentes.md`:
   em sequência, ou duas instâncias em paralelo se os usuários forem diferentes.
 - **C**: revisor fase código, frente a frente; REPROVADO volta ao executor e é
   revisado de novo só no que mudou.
-- **D**: executor fase documentação (sobre o código aprovado) ∥ revisor fase bugs.
+- **D**: integrador fase otimizar, frente a frente (é o único escritor do worktree nessa hora).
+- **E**: executor fase documentação (sobre o código otimizado) ∥ revisor fase bugs.
+- **Entrega**: integrador fase integrar no worktree `integracao` e fase pre-push.
 - Dois casos que mudam a mesma configuração global nunca na mesma rodada.
 - Porta local, se alguém subir servidor: executor/executor-ui 3101, executor-api 3102, réplica 3190.
 
 ## Entrega
 
-1. `status` → frentes concluídas, resultados com a seção "Limpeza", revisões de código aprovadas.
+1. `status` → frentes concluídas, resultados com a seção "Limpeza", revisões de
+   código aprovadas e otimização registrada em `integrador.md`.
 2. `coletar` → um patch por frente (commits + não commitado + arquivos novos).
-3. Revisar; aplicar no principal só com autorização:
-   `git apply --check <patch> && git apply <patch>` — executor(es) e documentador
-   juntos. Conflito no mesmo arquivo → orquestrador resolve com as frentes, sem sobrescrever.
-4. `remover` só quando o usuário pedir; branch com commits é mantida.
+3. `criar <ID> integracao` → o integrador aplica os patches (executor(es) e
+   documentador juntos), repara conflitos e roda o pre-push ali — nada é aplicado
+   no checkout principal.
+4. Commit, push e merge da branch `qa/<ID>/integracao` só com autorização, feitos
+   pelo integrador.
+5. `remover` só quando o usuário pedir; branch com commits é mantida.

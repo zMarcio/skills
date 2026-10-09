@@ -44,8 +44,8 @@ cmd_criar() {
   for a in "$@"; do
     case "$a" in
       --env) env=1 ;;
-      executor|executor-ui|executor-api|regressao|documentador) frentes+=("$a") ;;
-      *) die "frente desconhecida: $a (executor|executor-ui|executor-api|regressao|documentador)" ;;
+      executor|executor-ui|executor-api|regressao|documentador|integracao) frentes+=("$a") ;;
+      *) die "frente desconhecida: $a (executor|executor-ui|executor-api|regressao|documentador|integracao)" ;;
     esac
   done
   [ ${#frentes[@]} -gt 0 ] || frentes=(executor regressao)
@@ -108,6 +108,9 @@ cmd_coletar() {
     [ -n "$wt" ] || continue
     local f=${br##*/} base out
     base=$(sed -n 's/^QA_BASE=//p' "$wt/.qa-frente.env")
+    if [ "$f" = integracao ]; then     # destino da integração: não vira patch de si mesma
+      echo "integracao: destino da integração (não coletado)"; continue
+    fi
     if [ "$f" = regressao ]; then      # só execução: nada a entregar
       local sujo; sujo=$(git -C "$wt" status --porcelain | grep -v -e ' \.qa-frente\.env$' -e ' node_modules$' -e ' \.env$' || true)
       if [ -n "$sujo" ]; then

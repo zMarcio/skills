@@ -40,8 +40,8 @@ Slug: minúsculas, sem acento, hífens (`Painel de Atendimento` → `painel-de-a
 ## 1. Coletar e pedir explicação
 
 Ler `## Handoff de documentação` de cada `.qa/<ID>/resultado-*.md`, a
-especificação TC, `decisoes.md` e os vereditos `revisao-codigo-*.md` (documentar
-o código **aprovado**, já com as correções). Conferir no worktree que cada
+especificação TC, `decisoes.md`, os vereditos `revisao-codigo-*.md` e o
+`integrador.md` (documentar o código **aprovado e otimizado**, com as correções). Conferir no worktree que cada
 arquivo/teste citado existe: `rg -n "TC-<numero>-" <worktree>/tests`.
 
 Quem criou documenta: o executor explica o próprio código. Pedir explicação só

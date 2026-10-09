@@ -53,7 +53,7 @@ Severidade descreve impacto; prioridade de correção pertence ao fluxo GOD/PO. 
 
 ## QA por card e por módulo (`/qa-card`, `/qa-modulo`)
 
-No Claude Code, o QA roda com três agentes, mais a cibersecurity sob demanda.
+No Claude Code, o QA roda com quatro agentes, mais a cibersecurity sob demanda.
 Com card, o foco é o fluxo pedido e suas dependências; na construção do zero
 (`/qa-modulo`), a cobertura é organizada por módulo. Quem revisa nunca é quem fez.
 Todos herdam os limites, a sanitização e o handoff deste perfil, e o contrato
@@ -69,12 +69,16 @@ comum do Fluctus (`qa-fluctus`).
 - **Revisor** — revisa a especificação antes da execução (`qa-spec-reviewer`),
   valida o código do executor reexecutando (`qa-revisor-codigo`) e redige os cards
   dos bugs novos sem publicar (`qa-escritor-card`, o bug-drafter).
+- **Integrador** — revisão profunda e otimização do código aprovado sem mudar
+  comportamento, parecer de pertinência de cada teste frente aos TCs, integração
+  das frentes com reparo de conflitos, verificação antes do push e merge
+  (`qa-integrador`; também via `/qa-integrar`).
 - **Cibersecurity** — auditoria somente leitura, réplica isolada para
   reproduções; também via `/qa-ciber`. Complementa o perfil
   [Cybersecurity](../cybersecurity/CYBERSECURITY.md) do workflow geral.
 
 Worktrees e rodadas por usuário em `qa-worktree-frentes`. Fluxos em
-`.claude/commands/`; spec em `specs/workflow/QA-AGENTES-004.md`.
+`.claude/commands/`; specs em `specs/workflow/QA-AGENTES-004.md` e `QA-INTEGRADOR-005.md`.
 
 ## Skills complementares
 

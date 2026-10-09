@@ -1,5 +1,5 @@
 ---
-description: QA de um card do GitHub com 3 agentes (planejador, executor, revisor) e a cibersecurity sob demanda — contexto unificado, mapa de regressão, rodadas de perguntas, especificação revisada e confirmada por você, execução em rodadas com worktrees, revisão de código, documentação SDD e rascunhos de cards
+description: QA de um card do GitHub com os agentes planejador, executor, revisor e integrador, e a cibersecurity sob demanda — contexto unificado, mapa de regressão, rodadas de perguntas, especificação revisada e confirmada por você, execução em rodadas com worktrees, revisão de código, documentação SDD e rascunhos de cards
 argument-hint: <link-do-card> [repo=<caminho-do-código>] [de=<ref> para=<ref>]
 ---
 
@@ -7,7 +7,7 @@ Card: $ARGUMENTS
 
 Você é o orquestrador. Rode da raiz principal da suíte (`~/fluctus_automatizado`
 = `<raiz>`). Agentes em `.claude/agents/`: **planejador**, **executor**,
-**revisor** e **cibersecurity**; contrato comum e mapa de fases na skill
+**revisor**, **integrador** e **cibersecurity**; contrato comum e mapa de fases na skill
 `qa-fluctus`. Nenhum agente chama outro: só você delega e só você fala com o
 usuário. Com card, o foco é **o fluxo pedido e as dependências dele**. Quem revisa
 nunca é quem fez.
@@ -87,11 +87,20 @@ Toda chamada ao executor leva: fase, especificação, `revisao-spec.md`,
    EXECUTADO, cada resultado tem a seção "Limpeza" e cada frente tem revisão de
    código aprovada. Sobra de dados vira pendência no relatório.
 
-## 6. Documentação e rascunhos de cards — rodada D
+## 6. Revisão profunda e otimização — rodada D
+
+- **integrador**, fase `otimizar`, uma vez por frente aprovada pelo revisor, no
+  worktree dela (o executor já terminou). Otimiza sem mudar comportamento (prova
+  antes × depois) e dá o parecer de pertinência de cada teste com base nos TCs.
+- Mudança que alteraria assert, esperado ou cobertura volta ao revisor como achado.
+- Propostas de remover, unir ou mover teste: pergunte ao usuário; o que ele
+  aprovar o integrador aplica e o revisor confere de novo só aquilo.
+
+## 7. Documentação e rascunhos de cards — rodada E
 
 Em paralelo:
 
-- **executor**, fase `documentacao`: documenta o código aprovado no worktree
+- **executor**, fase `documentacao`: documenta o código otimizado no worktree
   `…/executor` (ou `…/documentador` na divisão). Se voltar `ESTADO: PEDIDOS`,
   repasse ao agente responsável (SendMessage) e avise o executor quando ele responder.
 - **revisor**, fase `bugs`, se houver "Falhas para o escritor": bugs novos, sem
@@ -100,17 +109,25 @@ Em paralelo:
 Mostre os rascunhos, cada um no seu bloco de código (a `## Evidência` é para os
 prints/vídeo dele), com as duplicatas e evidências pendentes. Nada é publicado.
 
-## 7. Relatório e entrega
+## 8. Integração, pre-push e relatório
 
-- `qa-frentes.sh coletar <CARD_ID>` → patches (testes + documentação); a regressão não gera patch, só aviso se sobrou arquivo gerado.
+- `qa-frentes.sh coletar <CARD_ID>` → patches (testes + documentação); a regressão
+  não gera patch, só aviso se sobrou arquivo gerado.
+- `qa-frentes.sh criar <CARD_ID> integracao` e **integrador**, fase `integrar`:
+  aplica os patches no worktree `integracao`, repara conflitos (conflito de
+  intenção volta a você como pergunta) e roda a fase `pre-push`.
 - `.qa/<CARD_ID>/relatorio.md` com a skill `qa-relatorio` (parecer Apto / Apto
-  com ressalvas / Não apto / Inconclusivo), incluindo revisões, regressão,
-  performance, segurança, limpeza e documentação.
+  com ressalvas / Não apto / Inconclusivo), incluindo revisões, otimizações e
+  pertinência, regressão, performance, segurança, limpeza, documentação e o
+  veredito de pre-push.
 - Resposta final curta: parecer, contagem por resultado e por camada, itens de
   regressão com falha, rascunhos de cards, achados de segurança por classe,
-  documentos criados, sobras de dados, onde estão os patches e as autorizações
-  pendentes: aplicar patches? commit? remover worktrees? rodar carga pendente?
-  publicar algum card? Cada ação só com "sim" explícito; push só com pedido próprio.
+  documentos criados, sobras de dados, veredito de pre-push, onde está a branch
+  `qa/<CARD_ID>/integracao` e as autorizações pendentes: commit? push (só com
+  PRONTO PARA PUSH)? merge na branch da suíte? remover worktrees? rodar carga
+  pendente? publicar algum card? Cada ação só com "sim" explícito; push só com
+  pedido próprio. Commit, push e merge autorizados são feitos pelo **integrador**
+  (merge sempre com a fase `merge`, que repara conflitos).
 
 ## Regras
 

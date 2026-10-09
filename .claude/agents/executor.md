@@ -23,7 +23,8 @@ carregue a skill da fase com a ferramenta Skill (`qa-executor` já vem carregada
    `regressao`: suíte da base, sem o código novo, saídas na pasta do card.
 3. **performance** — casos `Perf` (`qa-performance-k6`) em `~/k6-fluctus`, no
    nível autorizado em `decisoes.md`.
-4. **documentacao** — `qa-documentador-sdd`: documente o que você criou em
+4. **documentacao** — `qa-documentador-sdd`: depois da otimização do integrador,
+   documente o que você criou (na versão otimizada) em
    `docs/testes/executor/` e aplique as propostas ao `AI_CONTEXT.md`, no worktree
    `executor` (ou `documentador` quando houve divisão).
 

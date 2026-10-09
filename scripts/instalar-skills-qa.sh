@@ -44,13 +44,14 @@ done
 for p in openai-security-threat-model openai-security-best-practices; do
   run claude plugin install "$p@skills-curated"
 done
-# Planejador: testing-strategy · Executor: accessibility-review · Revisor: code-review
+# Planejador: testing-strategy · Executor: accessibility-review · Revisor e Integrador: code-review
 run claude plugin install engineering@knowledge-work-plugins
 run claude plugin install design@knowledge-work-plugins
 
 echo "== 2. Skills no projeto (npx skills)"
 need npx
 run_in "$PROJ" npx --yes skills add https://github.com/mattpocock/skills --skill grilling --agent claude-code
+run_in "$PROJ" npx --yes skills add https://github.com/mattpocock/skills --skill resolving-merge-conflicts --agent claude-code   # integrador
 run_in "$PROJ" npx --yes skills add grafana/skills --skill k6 --agent claude-code
 run_in "$PROJ" npx --yes skills add fugazi/test-automation-skills-agents --skill playwright-regression-testing --agent claude-code
 

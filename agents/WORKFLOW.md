@@ -117,13 +117,14 @@ testes nem declarar sucesso para encerrar o ciclo.
 | Revisão da especificação e pré-checagem | `qa-spec-reviewer` | revisor |
 | Revisão de código (verificador de códigos) | `qa-revisor-codigo` | revisor |
 | Rascunhos de cards de bug | `qa-escritor-card` | revisor |
+| Revisão profunda, otimização, pertinência, conflitos, pre-push e merge | `qa-integrador` | integrador |
 | Auditoria de segurança | `audit-scope-readonly`, `controlled-vulnerability-validation`, `security-findings-report` + externas | cibersecurity |
 | Worktrees e rodadas | `qa-worktree-frentes` | orquestrador |
 | Relatório e exploratório | `qa-relatorio`, `qa-exploratory-charter` | QA |
-| Investigar falha e provar antes de afirmar (superpowers, MIT) | `systematic-debugging`, `verification-before-completion` | executor, revisor |
+| Investigar falha e provar antes de afirmar (superpowers, MIT) | `systematic-debugging`, `verification-before-completion` | executor, revisor, integrador |
 
 Os agentes de QA existem só no Claude Code (`.claude/agents/`); `.claude/skills`
-aponta para `.agents/skills/`; comandos `/qa-card`, `/qa-modulo` e `/qa-ciber`
+aponta para `.agents/skills/`; comandos `/qa-card`, `/qa-modulo`, `/qa-ciber` e `/qa-integrar`
 em `.claude/commands/`.
 Skills externas aprovadas por agente: [QA-SKILLS-003](../specs/workflow/QA-SKILLS-003.md);
 instalação com `scripts/instalar-skills-qa.sh <projeto>`.

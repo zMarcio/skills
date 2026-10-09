@@ -10,7 +10,7 @@ requisito explícito do card e à decisão registrada do usuário.
 
 ## Agentes e fases
 
-Três agentes de QA, mais a cibersecurity sob demanda. Os nomes antigos viraram
+Quatro agentes de QA, mais a cibersecurity sob demanda. Os nomes antigos viraram
 fases — as skills usam esses nomes:
 
 - **planejador** — fases leitor (`qa-leitor-card`), verificador
@@ -21,9 +21,14 @@ fases — as skills usam esses nomes:
   (`qa-documentador-sdd`).
 - **revisor** — fases spec-reviewer (`qa-spec-reviewer`), revisão de código
   (`qa-revisor-codigo`) e escritor / bug-drafter (`qa-escritor-card`).
+- **integrador** — revisão profunda e otimização sem mudar comportamento
+  (`qa-integrador`), pertinência de cada teste frente aos TCs, integração das
+  frentes com reparo de conflitos, verificação pre-push e merge.
 - **cibersecurity** — auditoria somente leitura, sob demanda.
 
-Quem revisa nunca é quem fez: o revisor confere o planejador (spec) e o executor (código).
+Quem revisa nunca é quem fez: o revisor confere o planejador (spec) e o executor
+(código); a otimização do integrador é provada por execução antes × depois, e
+qualquer mudança de assert, esperado ou cobertura volta ao revisor.
 
 ## Fontes de verdade (ler antes de escrever qualquer teste)
 

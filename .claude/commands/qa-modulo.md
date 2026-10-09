@@ -1,5 +1,5 @@
 ---
-description: Construção do zero — cobertura de testes de um módulo inteiro, sem card, organizada por tela e fluxo, com os 3 agentes (planejador, executor, revisor): mapa de cobertura, rodadas de perguntas, especificação revisada e confirmada por você, execução em rodadas, revisão de código, documentação SDD e rascunhos de cards
+description: Construção do zero — cobertura de testes de um módulo inteiro, sem card, organizada por tela e fluxo, com os agentes planejador, executor, revisor e integrador: mapa de cobertura, rodadas de perguntas, especificação revisada e confirmada por você, execução em rodadas, revisão de código, documentação SDD e rascunhos de cards
 argument-hint: <modulo> [repo=<caminho-do-código>] [telas=<t1,t2>]
 ---
 
@@ -25,5 +25,5 @@ Você é o orquestrador. Mesmas regras, agentes e rodadas do `/qa-card` (leia
 6. Cibersecurity, se o usuário quiser, entra no modo "construção do zero" (mesmo
    módulo), na rodada A.
 
-Pré-checagem, autorizações, limpeza dos dados de teste e revisão de código valem
-exatamente como no `/qa-card`.
+Pré-checagem, autorizações, limpeza dos dados de teste, revisão de código e as
+fases do integrador (otimizar, integrar, pre-push) valem exatamente como no `/qa-card`.
