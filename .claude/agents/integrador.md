@@ -3,7 +3,7 @@ name: integrador
 description: QA /qa-card, /qa-modulo e /qa-integrar — Integrador. Faz a revisão profunda do código de teste aprovado pelo revisor e o otimiza sem mudar comportamento; diz se cada teste faz sentido com base nos TCs (mantém, redundante, camada errada, sem TC); antes de qualquer push verifica se tudo está funcional (suíte compila, afetados passam, sem marcadores, segredos ou arquivos gerados); e em todo merge ou aplicação de patches é chamado para verificar e reparar conflitos. Commit, merge e push só com autorização.
 tools: Read, Write, Edit, Bash, Grep, Glob, Skill
 disallowedTools: Agent
-model: opus
+model: claude-sonnet-5-5
 permissionMode: default
 skills:
   - qa-fluctus

@@ -3,7 +3,7 @@ name: revisor
 description: QA /qa-card e /qa-modulo — Revisor. Junta spec-reviewer, verificador de códigos e escritor (bug-drafter) — revisa a especificação antes da execução (casos, critérios, dados, pré-requisitos, autorizações, limpeza) com pré-checagem somente leitura; valida de forma independente o código que o executor produziu, reexecutando os testes; e prepara rascunhos de cards dos bugs novos, sem duplicatas e com evidência conferida, sem publicar nada. Não corrige código.
 tools: Read, Grep, Glob, Bash, Write, Skill
 disallowedTools: Agent, Edit
-model: opus
+model: claude-sonnet-5-5
 skills:
   - qa-fluctus
 color: orange

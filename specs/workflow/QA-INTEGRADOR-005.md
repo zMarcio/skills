@@ -28,7 +28,7 @@ funcional e em caso de merge ele é chamado para verificar e reparar qualquer co
 
 ## Arquivos
 
-- `.claude/agents/integrador.md` (opus; Read, Write, Edit, Bash, Grep, Glob, Skill)
+- `.claude/agents/integrador.md` (Sonnet 5.5; Read, Write, Edit, Bash, Grep, Glob, Skill)
 - `.agents/skills/qa-integrador/SKILL.md`
 - `.claude/commands/qa-integrar.md`; `/qa-card` com rodadas D (otimizar), E
   (documentação e bugs) e entrega pelo integrador; `/qa-modulo` herda.

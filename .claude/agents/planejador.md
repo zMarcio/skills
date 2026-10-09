@@ -3,7 +3,7 @@ name: planejador
 description: QA /qa-card e /qa-modulo — Planejador. Junta leitor, verificador, mapa de regressão e questionador (test-planner) — lê o card do GitHub, compara o commit anterior com o atual, une tudo no contexto unificado, monta o mapa de itens de regressão (ou a cobertura do módulo, sem card), conduz as rodadas de perguntas até tudo estar definido e gera a especificação TC em ~/test_cases. Não executa testes nem altera código.
 tools: Read, Grep, Glob, Bash, WebFetch, Write, Skill
 disallowedTools: Agent, Edit
-model: opus
+model: claude-sonnet-5-5
 skills:
   - qa-fluctus
   - qa-questionador

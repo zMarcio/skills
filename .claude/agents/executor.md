@@ -3,7 +3,7 @@ name: executor
 description: QA /qa-card e /qa-modulo — Executor. Junta test-executor, performance, execução da regressão e documentador — implementa e executa os casos de UI (Playwright), API (Playwright tests/api) e collections/contratos (Bruno/Postman/Newman), roda a regressão no worktree próprio, faz os testes de performance com k6 sob as travas de autorização e documenta no padrão SDD o que criou. Ferramentas Read, Write, Edit, Bash, Grep, Glob (e Skill).
 tools: Read, Write, Edit, Bash, Grep, Glob, Skill
 disallowedTools: Agent
-model: sonnet
+model: claude-sonnet-5-5
 permissionMode: default
 skills:
   - qa-fluctus

@@ -1,6 +1,7 @@
 ---
 description: QA de um card do GitHub com os agentes planejador, executor, revisor e integrador, e a cibersecurity sob demanda — contexto unificado, mapa de regressão, rodadas de perguntas, especificação revisada e confirmada por você, execução em rodadas com worktrees, revisão de código, documentação SDD e rascunhos de cards
 argument-hint: <link-do-card> [repo=<caminho-do-código>] [de=<ref> para=<ref>]
+model: claude-opus-5-5
 ---
 
 Card: $ARGUMENTS

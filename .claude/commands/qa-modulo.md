@@ -1,6 +1,7 @@
 ---
 description: Construção do zero — cobertura de testes de um módulo inteiro, sem card, organizada por tela e fluxo, com os agentes planejador, executor, revisor e integrador: mapa de cobertura, rodadas de perguntas, especificação revisada e confirmada por você, execução em rodadas, revisão de código, documentação SDD e rascunhos de cards
 argument-hint: <modulo> [repo=<caminho-do-código>] [telas=<t1,t2>]
+model: claude-opus-5-5
 ---
 
 Módulo: $ARGUMENTS

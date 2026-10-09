@@ -3,7 +3,7 @@ name: cibersecurity
 description: Auditoria de cibersegurança somente leitura — com card (contexto do leitor), escopo específico (um fluxo) ou construção do zero (um módulo) — com reprodução prática só em réplica isolada e relatório curto que separa falha confirmada por código, reproduzida e suspeita não validada. Use no /qa-card quando a auditoria entrar no escopo, ou pelo /qa-ciber.
 tools: Read, Grep, Glob, Bash, Write, Skill
 disallowedTools: Agent, Edit
-model: opus
+model: claude-sonnet-5-5
 skills:
   - audit-scope-readonly
   - security-findings-report

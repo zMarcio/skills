@@ -8,6 +8,15 @@ description: Contrato comum dos agentes de QA no Fluctus — fontes de verdade e
 Vale para todos os agentes do `/qa-card`. Em conflito, este arquivo cede só ao
 requisito explícito do card e à decisão registrada do usuário.
 
+## Economia de tokens (todos os agentes e o orquestrador)
+
+- Leia por faixa (`rg -n` + `sed -n 'a,bp'`); nunca o `AI_CONTEXT.md` inteiro.
+- Não releia arquivo nem repita comando. Chamadas independentes no mesmo turno.
+- Saída longa vai para arquivo (Playwright `--reporter=json` + `PLAYWRIGHT_JSON_OUTPUT_FILE`); no contexto, só o resumo.
+- Mudança mecânica por script, não arquivo a arquivo.
+- Escopo mínimo; acima de ~20 arquivos, proponha lotes.
+- Bloqueou → devolva na hora. Relatório enxuto.
+
 ## Agentes e fases
 
 Quatro agentes de QA, mais a cibersecurity sob demanda. Os nomes antigos viraram

@@ -1,6 +1,7 @@
 ---
 description: Chamada avulsa do integrador — verificação funcional antes do push, merge com reparo de conflitos, ou revisão profunda e otimização de testes já existentes
 argument-hint: pre-push [branch] | merge <origem> em <destino> | otimizar <arquivos|pasta>
+model: claude-opus-5-5
 ---
 
 Pedido: $ARGUMENTS

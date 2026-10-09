@@ -15,16 +15,16 @@ Evolui: [QA-CARD-002](QA-CARD-002.md) (fluxo e regras continuam valendo) e
 
 ## Agentes
 
-- **planejador** (opus) — fases leitor, verificador (diff + contexto unificado),
+- **planejador** (Sonnet 5.5) — fases leitor, verificador (diff + contexto unificado),
   mapa de regressão / cobertura do módulo e questionador (test-planner). Só leitura
   no código e no GitHub; escreve `.qa/<ID>/` e a especificação em `~/test_cases`.
-- **executor** (sonnet) — fases ui-api (Playwright, `tests/api`, Bruno/Postman/Newman),
+- **executor** (Sonnet 5.5) — fases ui-api (Playwright, `tests/api`, Bruno/Postman/Newman),
   regressão (worktree `regressao`, suíte na base), performance (k6, travas de
   autorização) e documentação SDD do que criou. Read, Write, Edit, Bash, Grep, Glob + Skill.
-- **revisor** (opus) — fases spec (revisão e pré-checagem), código (verificador de
+- **revisor** (Sonnet 5.5) — fases spec (revisão e pré-checagem), código (verificador de
   códigos: diff × especificação × padrões, reexecução provando que passa e que
   falha quando deve) e bugs (bug-drafter). Não corrige código.
-- **cibersecurity** (opus) — sem mudança; sob demanda e pelo `/qa-ciber`.
+- **cibersecurity** (Sonnet 5.5) — sem mudança; sob demanda e pelo `/qa-ciber`.
 
 Quem revisa nunca é quem fez: o revisor confere o planejador (spec) e o executor (código).
 

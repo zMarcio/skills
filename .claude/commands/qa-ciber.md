@@ -1,6 +1,7 @@
 ---
 description: Auditoria de segurança somente leitura fora do /qa-card — um fluxo específico ou um módulo inteiro (construção do zero), com réplica isolada para reproduções
 argument-hint: <modulo|fluxo|link-do-card> repo=<caminho-do-código> [commit=<sha>]
+model: claude-opus-5-5
 ---
 
 Alvo: $ARGUMENTS
